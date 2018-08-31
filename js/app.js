@@ -1,38 +1,43 @@
 const width = 8;
 const numberOfCells = 56;
 const subInitialLocation = 22;
-const initialTime = 30;
-let fishTimerId = 0;
-let fishTimerId2 = 0;
+const initialTime = 60;
+// let fishTimerId = 0;
+// let fishTimerId2 = 0;
 let gameTimerId = 0;
 let generateFishTimerId = 0;
 let points = 0;
 let gameRunning = false;
 
-const rowsObject = {
-  //row: [most left, most right]
-  row0: [0,7],
-  row1: [8,15],
-  row2: [16,23],
-  row3: [24,31],
-  row4: [32,39],
-  row5: [40,47],
-  row6: [48,55]
-};
 
-const rows = Object.keys(rowsObject);
+const $fishInPlay = [];
 
-function randomRow(){
-  return Math.floor(Math.random()*(rows.length));
-}
+
+
+// const rowsObject = {
+//   //row: [most left, most right]
+//   row0: [0,7],
+//   row1: [8,15],
+//   row2: [16,23],
+//   row3: [24,31],
+//   row4: [32,39],
+//   row5: [40,47],
+//   row6: [48,55]
+// };
+
+// const rows = Object.keys(rowsObject);
+//
+// function randomRow(){
+//   return Math.floor(Math.random()*(rows.length));
+// }
 // //** tests **
 // console.log('random row is ' + rows[randomRow()]);
 // console.log('random key is ' + rowsObject[rows[randomRow()]]);
 // console.log('random MostLeft is ' + rowsObject[rows[randomRow()]][0]);
 
 
-let fishLocation = -1;
-let fishLocation2 = -1;
+// let fishLocation = -1;
+// let fishLocation2 = -1;
 
 
 $(() => {
@@ -43,73 +48,100 @@ $(() => {
   // const $cellContainer = $('.cellContainer');
 
 
+  class Fish {
+    constructor(locationIndex, type, pointsValue, movementPattern, movementIndex, age){
+      this.location = locationIndex;
+      this.type = type;
+      this.pointsValue = pointsValue;
+      this.movementPattern = movementPattern;
+      this.movementIndex = movementIndex;
+      this.age = age;
+    }
+    move () {
+      $cells.eq(this.location).removeClass(this.type);
+      this.location += this.movementPattern[this.movementIndex];
+      $cells.eq(this.location).addClass(this.type);
+      this.age--;
+    }
+  }
+
+  const greenFish = new Fish(27, 'greenFish', 4, [1],0,10);
+  $fishInPlay.push(greenFish);
+  const redFish = new Fish(40, 'fish', 4, [-1],0,10);
+  $fishInPlay.push(greenFish);
+
+  console.log($fishInPlay);
+
   let subLocation = subInitialLocation;
   $cells.eq(subLocation).addClass('submarine');
 
 
   // $cells.eq(fishLocation).addClass('fish');
 
-  function moveFish(number){
-    $cells.eq(fishLocation).removeClass('fish');
-    fishLocation += number;
-    console.log(fishLocation);
-    $cells.eq(fishLocation).addClass('fish');
-  }
-
-  function moveFish2(number){
-    $cells.eq(fishLocation2).removeClass('fish');
-    fishLocation2 += number;
-    console.log(fishLocation2);
-    $cells.eq(fishLocation2).addClass('fish');
-  }
+  // function moveFish(number){
+  //   $cells.eq(fishLocation).removeClass('fish');
+  //   fishLocation += number;
+  //   console.log(fishLocation);
+  //   $cells.eq(fishLocation).addClass('fish');
+  // }
+  //
+  // function moveFish2(number){
+  //   $cells.eq(fishLocation2).removeClass('fish');
+  //   fishLocation2 += number;
+  //   console.log(fishLocation2);
+  //   $cells.eq(fishLocation2).addClass('fish');
+  // }
   //
 
 
   generateFishTimerId = setInterval( ()=>{
-    fishLocation = rowsObject[rows[randomRow()]][0] -1;
+    greenFish.move();
+    redFish.move();
+    console.log(greenFish.age);
+    // fishLocation = rowsObject[rows[randomRow()]][0] -1;
+    //
+    // fishTimerId = setInterval( ()=>{
+    //   moveFish(1);
+    //   if ((fishLocation+1)%width === 0){
+    //     clearInterval(fishTimerId);
+    //     $cells.eq(fishLocation).removeClass('fish');
+    //     fishLocation = -1;
+    //   }
+    // },200);
+    // console.log(fishTimerId);
+    //
+    //
+    // fishLocation2 = rowsObject[rows[randomRow()]][1] +1;
+    //
+    // fishTimerId2 = setInterval( ()=>{
+    //   moveFish2(-1);
+    //   if ((fishLocation2)%width === 0){
+    //     clearInterval(fishTimerId2);
+    //     $cells.eq(fishLocation2).removeClass('fish');
+    //     fishLocation2 = -1;
+    //   }
+    // },200);
+    // console.log(fishTimerId2);
 
-    fishTimerId = setInterval( ()=>{
-      moveFish(1);
-      if ((fishLocation+1)%width === 0){
-        clearInterval(fishTimerId);
-        $cells.eq(fishLocation).removeClass('fish');
-        fishLocation = -1;
-      }
-    },200);
-    console.log(fishTimerId);
-
-
-    fishLocation2 = rowsObject[rows[randomRow()]][1] +1;
-
-    fishTimerId2 = setInterval( ()=>{
-      moveFish2(-1);
-      if ((fishLocation2)%width === 0){
-        clearInterval(fishTimerId2);
-        $cells.eq(fishLocation2).removeClass('fish');
-        fishLocation2 = -1;
-      }
-    },200);
-    console.log(fishTimerId2);
-
-  },6000);
-
-
-  function checkIfCaught(){
-    if((subLocation === fishLocation)||(subLocation === fishLocation2)){
-      console.log('FISH CAUGHT');
-      points++;
-      $pointDisplay.text(points);
-      console.log(`POINTS ARE ${points}`);
-      $cells.eq(fishLocation).removeClass('fish');
-      $cells.eq(fishLocation2).removeClass('fish');
-      fishLocation = -1;
-      fishLocation2 = -1;
-      clearInterval(fishTimerId);
-      clearInterval(fishTimerId2);
+  },500);
 
 
-    }
-  }
+  // function checkIfCaught(){
+  //   if((subLocation === fishLocation)||(subLocation === fishLocation2)){
+  //     console.log('FISH CAUGHT');
+  //     points++;
+  //     $pointDisplay.text(points);
+  //     console.log(`POINTS ARE ${points}`);
+  //     $cells.eq(fishLocation).removeClass('fish');
+  //     $cells.eq(fishLocation2).removeClass('fish');
+  //     fishLocation = -1;
+  //     fishLocation2 = -1;
+  //     clearInterval(fishTimerId);
+  //     clearInterval(fishTimerId2);
+  //
+  //
+  //   }
+  // }
 
 
 
@@ -119,14 +151,16 @@ $(() => {
       checkIfCaught();
     },100);
     timeCountDown();
+    points = 0;
+    $pointDisplay.text(points);
   }
 
-  //Moving submarine
+  //** Moving submarine **
   function moveSub(number) {
     $cells.eq(subLocation).removeClass('submarine');
-    $cells.eq(subLocation).removeClass('movingLeft');
+    // $cells.eq(subLocation).removeClass('movingLeft');
     subLocation += number;
-    console.log(subLocation, fishLocation);
+    // console.log(subLocation, fishLocation);
     $cells.eq(subLocation).addClass('submarine');
   }
 
@@ -135,8 +169,7 @@ $(() => {
     gameRunning = false;
     clearInterval(gameTimerId);
     clearInterval(generateFishTimerId);
-    points = 0;
-    $pointDisplay.text(points);
+
   }
 
 
@@ -146,7 +179,7 @@ $(() => {
     countDownId = setInterval(()=>{
       timeLeft--;
       $airTank.height((700/initialTime)*timeLeft);
-      console.log(`${timeLeft} seconds left`);
+      // console.log(`${timeLeft} seconds left`);
       if (timeLeft===0){
         clearInterval(countDownId);
         endGame();
@@ -160,13 +193,6 @@ $(() => {
 
 
   function keypressed(e){
-    // ** TEST **
-    // if (e.keyCode === 65){
-    //   console.log('A pressed');
-    //   //a key
-    //   moveFish(1);
-    //   console.log(randomRow());
-    // }
     if (e.keyCode === 83){
       console.log('S pressed');
       //a key
@@ -195,34 +221,4 @@ $(() => {
   }
 
   runGame();
-
-
-  // let i=0;
-  // $cell.each($cell, ()=>{
-  //   $cell.attr('id', i);
-  //   i++;
-  // });
-
-  // let subLocation = 0;
-  // $cell.addClass('submarine');
-  // $cell[subLocation].addClass('submarine');
-
-  // setInterval(()=>{
-  //   $cells.eq(subLocation).removeClass('submarine');
-  //   subLocation++;
-  //   $cells.eq(subLocation).addClass('submarine');
-  // }, 500);
-
-  // console.dir($cell[0]);
-  //
-  //
-  // console.log($cell.hasClass('submarine'));
-  //
-  // // $cell.removeClass('submarine');
-  // const submarineLocation = $cell.closest('.submarine');
-  // const subLocationIndex = $cell.closest('.submarine').childElementCount();
-  //
-  // console.log(submarineLocation);
-  // console.log(subLocationIndex);
-
 });

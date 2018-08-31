@@ -39,6 +39,10 @@ h1 {
   background-color: red;
 }
 
+.greenFish {
+  background-color: green;
+}
+
 .movingLeft {
   transform:scaleX(-1);
 }
