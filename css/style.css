@@ -1,0 +1,33 @@
+body {
+  box-sizing: border-box;
+  background-image: url(../assets/images/jacquesCousteauSmall.jpeg);
+}
+h1 {
+  color: blue;
+
+}
+
+.cellContainer {
+  width: 800px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cell {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+  /* border: 1px red solid; */
+}
+
+.submarine {
+  background-color: yellow;
+  background-image: url(../assets/images/jacquesCousteauSmall.jpeg);
+  background-position: center;
+  background-size: contain;
+  display: grid;
+}
+
+.movingLeft {
+  transform:scaleX(-1);
+}
