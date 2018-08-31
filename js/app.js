@@ -1,6 +1,7 @@
 const width = 8;
 const numberOfCells = 56;
 const subInitialLocation = 22;
+const initialTime = 30;
 let fishTimerId = 0;
 let fishTimerId2 = 0;
 let gameTimerId = 0;
@@ -38,6 +39,7 @@ $(() => {
   console.log('DOM loaded');
   const $cells = $('.cell');
   const $pointDisplay = $('#points');
+  const $airTank = $('.airTank');
   // const $cellContainer = $('.cellContainer');
 
 
@@ -139,10 +141,11 @@ $(() => {
 
 
   function timeCountDown(){
-    let timeLeft = 15;
+    let timeLeft = initialTime;
     let countDownId = 0;
     countDownId = setInterval(()=>{
       timeLeft--;
+      $airTank.height((700/initialTime)*timeLeft);
       console.log(`${timeLeft} seconds left`);
       if (timeLeft===0){
         clearInterval(countDownId);
