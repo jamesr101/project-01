@@ -22,10 +22,14 @@ h1 {
 
 .submarine {
   background-color: yellow;
-  background-image: url(../assets/images/jacquesCousteauSmall.jpeg);
+  /* background-image: url(../assets/images/jacquesCousteauSmall.jpeg); */
   background-position: center;
   background-size: contain;
   display: grid;
+}
+
+.fish {
+  background-color: red;
 }
 
 .movingLeft {
