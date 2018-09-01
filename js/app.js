@@ -63,9 +63,26 @@ $(() => {
       $cells.eq(this.location).addClass(this.type);
       this.age--;
     }
+    kill () {
+      //remove from $fishInPlay
+
+      // function findObjectAt(element) {
+      //   return element.location === subLocation;
+      // }
+
+      // var indexOfMatch = array1.findIndex(findObjectAt);
+      // console.log(indexOfMatch);
+
+      // const indexOfFish = $fishInPlay.findIndex(this);
+      // console.log(indexOfFish);
+      // if (indexOfFish !== -1) {
+      //   $fishInPlay.splice(indexOfFish, 1);
+      // }
+      //remove class from current position
+    }
   }
 
-  const greenFish = new Fish(27, 'greenFish', 4, [1],0,10);
+  const greenFish = new Fish(27, 'greenFish', 3, [1],0,10);
   $fishInPlay.push(greenFish);
   const redFish = new Fish(40, 'redFish', 4, [-1],0,10);
   $fishInPlay.push(redFish);
@@ -104,11 +121,27 @@ $(() => {
   },500);
 
 
+  function findObjectAt(fish) {
+    return fish.location === subLocation;
+  }
+
   function checkIfCaught(){
     $.each($fishInPlay, function( key, value ) {
       // console.log(`fish location: ${value.location}, subLocation: ${subLocation}`);
       if(value.location === subLocation){
         console.log(`${value.type} caught at location ${value.location}`);
+        points += value.pointsValue;
+        $pointDisplay.text(points);
+
+
+        const indexOfMatch = $fishInPlay.findIndex(findObjectAt);
+        console.log(indexOfMatch);
+
+        if (indexOfMatch !== -1) {
+          $fishInPlay.splice(indexOfMatch, 1);
+        }
+        $cells.eq(this.location).removeClass(this.type);
+
       }
     });
   }
