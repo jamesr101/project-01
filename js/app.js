@@ -49,17 +49,17 @@ $(() => {
 
 
   class Fish {
-    constructor(locationIndex, type, pointsValue, movementPattern, movementIndex, age){
-      this.location = locationIndex;
+    constructor(location, type, pointsValue, movementPatternArray, movementPatternIndex, age){
+      this.location = location;
       this.type = type;
       this.pointsValue = pointsValue;
-      this.movementPattern = movementPattern;
-      this.movementIndex = movementIndex;
+      this.movementPatternArray = movementPatternArray;
+      this.movementPatternIndex = movementPatternIndex;
       this.age = age;
     }
     move () {
       $cells.eq(this.location).removeClass(this.type);
-      this.location += this.movementPattern[this.movementIndex];
+      this.location += this.movementPatternArray[this.movementPatternIndex];
       $cells.eq(this.location).addClass(this.type);
       this.age--;
     }
@@ -67,8 +67,8 @@ $(() => {
 
   const greenFish = new Fish(27, 'greenFish', 4, [1],0,10);
   $fishInPlay.push(greenFish);
-  const redFish = new Fish(40, 'fish', 4, [-1],0,10);
-  $fishInPlay.push(greenFish);
+  const redFish = new Fish(40, 'redFish', 4, [-1],0,10);
+  $fishInPlay.push(redFish);
 
   console.log($fishInPlay);
 
@@ -95,39 +95,31 @@ $(() => {
 
 
   generateFishTimerId = setInterval( ()=>{
-    greenFish.move();
-    redFish.move();
-    console.log(greenFish.age);
-    // fishLocation = rowsObject[rows[randomRow()]][0] -1;
-    //
-    // fishTimerId = setInterval( ()=>{
-    //   moveFish(1);
-    //   if ((fishLocation+1)%width === 0){
-    //     clearInterval(fishTimerId);
-    //     $cells.eq(fishLocation).removeClass('fish');
-    //     fishLocation = -1;
-    //   }
-    // },200);
-    // console.log(fishTimerId);
-    //
-    //
-    // fishLocation2 = rowsObject[rows[randomRow()]][1] +1;
-    //
-    // fishTimerId2 = setInterval( ()=>{
-    //   moveFish2(-1);
-    //   if ((fishLocation2)%width === 0){
-    //     clearInterval(fishTimerId2);
-    //     $cells.eq(fishLocation2).removeClass('fish');
-    //     fishLocation2 = -1;
-    //   }
-    // },200);
-    // console.log(fishTimerId2);
 
+    $.each($fishInPlay, function( key, value ) {
+      value.move();
+    });
+
+    checkIfCaught();
   },500);
 
 
+  function checkIfCaught(){
+    $.each($fishInPlay, function( key, value ) {
+      // console.log(`fish location: ${value.location}, subLocation: ${subLocation}`);
+      if(value.location === subLocation){
+        console.log(`${value.type} caught at location ${value.location}`);
+      }
+    });
+  }
+
+
+  $.each($fishInPlay, function( key, value ) {
+    console.log('type: ' + value.type + ' | location: ' +value.locationIndex);
+  });
+
   // function checkIfCaught(){
-  //   if((subLocation === fishLocation)||(subLocation === fishLocation2)){
+  //   if((subLocation === $fishInPlay.each(return this.location))||(subLocation === fishLocation2)){
   //     console.log('FISH CAUGHT');
   //     points++;
   //     $pointDisplay.text(points);
