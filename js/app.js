@@ -4,7 +4,9 @@ const subInitialLocation = 22;
 const initialTime = 60;
 
 let gameTimerId = 0;
+let countDownId = 0;
 let moveFishTimerId = 0;
+let spornFishTimerId = 0;
 let points = 0;
 let gameRunning = false;
 
@@ -20,9 +22,9 @@ $(() => {
   console.log('DOM loaded');
   const $cells = $('.cell');
   const $pointDisplay = $('#points');
+  const $restartButton = $('.restartButton');
   const $airTank = $('.airTank');
   // const $cellContainer = $('.cellContainer');
-
 
   class Fish {
     constructor(location, type, pointsValue, movementPatternArray, movementPatternIndex, age){
@@ -57,37 +59,39 @@ $(() => {
 
   }
 
+  //----- INITIAL SET UP ------
   const greenFish = new Fish(27, 'greenFish', 3, [1],0,10);
   $fishInPlay.push(greenFish);
   const redFish = new Fish(40, 'redFish', 4, [-1],0,10);
   $fishInPlay.push(redFish);
 
-  console.log($fishInPlay);
-
   let subLocation = subInitialLocation;
   $cells.eq(subLocation).addClass('submarine');
 
+  function spornFish(){
 
-  setInterval( ()=>{
-    //GENERATE FISH
+    spornFishTimerId = setInterval( ()=>{
+      //GENERATE FISH
 
-    const greenFish = new Fish(randomNumber(), 'greenFish', 3, [1],0,10);
-    $fishInPlay.push(greenFish);
-    const redFish = new Fish(randomNumber(), 'redFish', 4, [-1],0,10);
-    $fishInPlay.push(redFish);
+      const greenFish = new Fish(randomNumber(), 'greenFish', 3, [1],0,10);
+      $fishInPlay.push(greenFish);
+      const redFish = new Fish(randomNumber(), 'redFish', 4, [-1],0,10);
+      $fishInPlay.push(redFish);
 
-    console.log($fishInPlay);
+      console.log($fishInPlay);
 
-  },10000);
+    },6000);
+  }
 
-  moveFishTimerId = setInterval( ()=>{
+  function moveFish(){
+    moveFishTimerId = setInterval( ()=>{
 
-    $.each($fishInPlay, function( key, value ) {
-      value.move();
-    });
+      $.each($fishInPlay, function( key, value ) {
+        value.move();
+      });
 
-
-  },500);
+    },500);
+  }
 
 
 
@@ -120,6 +124,8 @@ $(() => {
     timeCountDown();
     points = 0;
     $pointDisplay.text(points);
+    spornFish();
+    moveFish();
   }
 
   //** Moving submarine **
@@ -136,34 +142,45 @@ $(() => {
     gameRunning = false;
     clearInterval(gameTimerId);
     clearInterval(moveFishTimerId);
+    clearInterval(spornFishTimerId);
+    clearInterval(countDownId);
 
   }
 
+  function restartGame(){
+    console.log('RESTART GAME');
+    endGame();
+    runGame();
+  }
 
   function timeCountDown(){
     let timeLeft = initialTime;
-    let countDownId = 0;
     countDownId = setInterval(()=>{
       timeLeft--;
       $airTank.height((700/initialTime)*timeLeft);
       // console.log(`${timeLeft} seconds left`);
       if (timeLeft===0){
-        clearInterval(countDownId);
+
         endGame();
       }
     }, 1000);
   }
 
 
-  $(document).on('button-up');
+  // ----- CONTROLS -----
   $(window).on('keydown', keypressed);
-
+  $restartButton.on('click',restartGame);
 
   function keypressed(e){
     if (e.keyCode === 83){
-      console.log('S pressed');
-      //a key
+      console.log('S pressed - GAME ENDED');
+      //S key
       endGame();
+    }
+    if (e.keyCode === 82){
+      console.log('R pressed - GAME STARTED');
+      //S key
+      restartGame();
     }
     if ((e.keyCode === 39) && ((subLocation+1)%width !== 0)){
       //right arrow
@@ -187,5 +204,4 @@ $(() => {
 
   }
 
-  runGame();
 });
