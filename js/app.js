@@ -167,7 +167,7 @@ $(() => {
     let timeLeft = initialTime;
     countDownTimerId = setInterval(()=>{
       timeLeft--;
-      $airTank.height((700/initialTime)*timeLeft);
+      $airTank.height(`${timeLeft/initialTime*100}%`);
 
       if (timeLeft===0){
         endGame();
