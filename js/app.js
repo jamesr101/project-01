@@ -43,7 +43,7 @@ $(() => {
       if (this.movementPatternIndex===this.movementPatternArray.length){
         this.movementPatternIndex = 0;
       }
-      if ((this.location < 0)||(numberOfCells < this.location)||(this.age<0)){
+      if ((this.location < width)||(numberOfCells < this.location)||(this.age<0)){
         this.remove();
         console.log('Fish swam off or died of old age');
       } else {
@@ -222,6 +222,7 @@ $(() => {
     }
     if ((e.keyCode === 37) && (subLocation%width !== 0)){
       //LEFT arrow
+      e.preventDefault();
       (gameRunning) && moveSub(-1);
       (gameRunning) && $cells.eq(subLocation).addClass('movingLeft');
     }
