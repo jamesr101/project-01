@@ -27,20 +27,20 @@ h1 {
   /* border: 1px red solid; */
 }
 
-.submarine {
-  background-color: yellow;
-  /* background-image: url(../assets/images/jacquesCousteauSmall.jpeg); */
-  background-position: center;
-  background-size: contain;
-  display: grid;
-}
-
 .redFish {
   background-color: red;
 }
 
 .greenFish {
   background-color: green;
+}
+
+.submarine {
+  background-color: yellow;
+  /* background-image: url(../assets/images/jacquesCousteauSmall.jpeg); */
+  background-position: center;
+  background-size: contain;
+  display: grid;
 }
 
 .movingLeft {
