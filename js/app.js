@@ -1,16 +1,20 @@
+// ----- GAME SET UP [IMPORTANT: RESET IF BOARD SIZE CHANGES]-----
 const width = 8;
 const numberOfCells = 56;
 const subInitialLocation = 22;
 const initialTime = 60;
 
-
+// ----- ID AND INDEX SET UP -----
 let countDownTimerId = 0;
 let points = 0;
 let gameRunning = false;
+let gameMechanicsTimerId = 0;
+let moveFishIndex = 0;
+let spornFishIndex = 30;
 const $fishInPlay = [];
 
 
-function randomNumber(){
+function randomLocation(){
   return Math.floor(Math.random()*(numberOfCells));
 }
 
@@ -20,8 +24,8 @@ $(() => {
   const $pointDisplay = $('#points');
   const $restartButton = $('.restartButton');
   const $airTank = $('.airTank');
-  // const $cellContainer = $('.cellContainer');
 
+  // ----- FISH CONSTRUCTOR -----
   class Fish {
     constructor(location, type, pointsValue, movementPatternArray, movementPatternIndex, age){
       this.location = location;
@@ -31,19 +35,19 @@ $(() => {
       this.movementPatternIndex = movementPatternIndex;
       this.age = age;
     }
-    move () {
+    move() {
       $cells.eq(this.location).removeClass(this.type);
       this.location += this.movementPatternArray[this.movementPatternIndex];
       if ((this.location < 0)||(numberOfCells < this.location)){
-        this.die();
+        this.remove();
         console.log('Fish swam off');
       } else {
         $cells.eq(this.location).addClass(this.type);
         this.age--;
       }
     }
-    die (){
-      const indexOfThisFish = $fishInPlay.findIndex(x => x.location === this.location);
+    remove() {
+      const indexOfThisFish = $fishInPlay.findIndex(fish => fish.location === this.location);
 
       if (indexOfThisFish !== -1) {
         $fishInPlay.splice(indexOfThisFish, 1);
@@ -54,88 +58,103 @@ $(() => {
 
   }
 
-  //----- INITIAL SET UP ------
+  //----- SUBMARINE SET UP ------
   let subLocation = subInitialLocation;
   $cells.eq(subLocation).addClass('submarine');
 
   //----- MOVING SUBMARINE -----
   function moveSub(number) {
+
     $cells.eq(subLocation).removeClass('submarine');
     subLocation += number;
     $cells.eq(subLocation).addClass('submarine');
+
   }
 
+  //----- FISH FUNCTIONS -----
   function spornFish(){
-    const greenFish = new Fish(randomNumber(), 'greenFish', 3, [1],0,10);
+
+    const greenFish = new Fish(randomLocation(), 'greenFish', 3, [1],0,10);
     $fishInPlay.push(greenFish);
-    const redFish = new Fish(randomNumber(), 'redFish', 4, [-1],0,10);
+
+    const redFish = new Fish(randomLocation(), 'redFish', 4, [-1],0,10);
     $fishInPlay.push(redFish);
+
   }
+
 
   function moveFish(){
+
     $.each($fishInPlay, function( key, value ) {
       value.move();
     });
+
   }
 
 
   function checkIfCaught(){
+
     $.each($fishInPlay, function( key, value ) {
+
       if(value.location === subLocation){
+
         points += value.pointsValue;
         $pointDisplay.text(points);
 
-        this.die();
+        this.remove();
       }
+
     });
+
   }
 
-  let gameMechanicsTimerId = 0;
-  let moveFishIndex = 0;
-  let spornFishIndex = 30;
 
 
   function gameMechanics (){
+
     gameMechanicsTimerId = setInterval(()=>{
 
       if (moveFishIndex<2){
         moveFishIndex++;
-      } else{
+      } else {
         moveFish();
         moveFishIndex = 0;
       }
 
       if (spornFishIndex<30){
         spornFishIndex++;
-      } else{
+      } else {
         spornFish();
         spornFishIndex = 0;
       }
 
       checkIfCaught();
+
     }, 100);
+
   }
 
 
 
 
-
+  // ----- GAME START AND END FUNCTIONS -----
   function runGame(){
     gameRunning = true;
     points = 0;
     $pointDisplay.text(points);
 
     timeCountDown();
-
     gameMechanics();
   }
 
+
   function endGame(){
     gameRunning = false;
-    clearInterval(countDownTimerId);
 
+    clearInterval(countDownTimerId);
     clearInterval(gameMechanicsTimerId);
   }
+
 
   function restartGame(){
     console.log('RESTART GAME');
@@ -143,6 +162,7 @@ $(() => {
     runGame();
   }
 
+  // ----- GAME TIMER COUNTDOWN -----
   function timeCountDown(){
     let timeLeft = initialTime;
     countDownTimerId = setInterval(()=>{
@@ -157,7 +177,7 @@ $(() => {
   }
 
 
-  // ----- CONTROLS -----
+  // ----- USER CONTROLS -----
   $(window).on('keydown', keypressed);
   $restartButton.on('click',restartGame);
 
@@ -169,25 +189,27 @@ $(() => {
     }
     if (e.keyCode === 82){
       console.log('R pressed - GAME STARTED');
-      //S key
+      //R key
       restartGame();
     }
+
+    // ----- SUBMARINE CONTROLS -----
     if ((e.keyCode === 39) && ((subLocation+1)%width !== 0)){
-      //right arrow
+      //RIGHT arrow
       (gameRunning) && moveSub(1);
     }
     if ((e.keyCode === 37) && (subLocation%width !== 0)){
-      //left arrow
+      //LEFT arrow
       (gameRunning) && moveSub(-1);
       (gameRunning) && $cells.eq(subLocation).addClass('movingLeft');
     }
     if (e.keyCode === 40) {
-      //down arrow
+      //DOWN arrow
       e.preventDefault();
       (gameRunning) && (subLocation+width < numberOfCells) && moveSub(width);
     }
     if (e.keyCode === 38) {
-      //up arrow
+      //UP arrow
       e.preventDefault();
       (gameRunning) && (subLocation-width+1 > 0) && moveSub(-width);
     }
