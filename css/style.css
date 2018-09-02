@@ -10,30 +10,35 @@ h1 {
 .container{
   border: 3px solid black;
   display: flex;
-
+  width: 1000px;
 }
 .airTankContainer{
   border: 3px solid yellow;
   box-sizing: border-box;
   background-color: gainsboro;
-  width: 20px;
+  width: 40px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 .cellContainer {
   width: 800px;
+  height: 700px;
+  overflow: scroll;
   display: flex;
   flex-wrap: wrap;
-  background-image: linear-gradient(#1a66ff, #003399);
+  background-image: radial-gradient(farthest-corner at 50% 0px,
+     lightskyblue 0%, #003399 100%);
 }
+
 
 .airTank {
   width: 100%;
-  height: 100%;
+  height: 98%;
   background-color: lightblue;
-
+  border-bottom-left-radius: 18px;
+  border-bottom-Right-radius: 18px;
 }
 
 .cell {
@@ -57,8 +62,36 @@ h1 {
   background-position: center;
   background-size: contain;
   display: grid;
-  border-radius: 25%;
+  border-radius: 30%;
+  position: relative;
+  height: 80px;
+  margin: 10px 0px;
 }
+
+div.submarine::before {
+    position: absolute;
+    content: '';
+    height: 50px;
+    width: 50px;
+    background-color: yellow;
+    border-radius: 40%;
+    bottom: 60px;
+    left: 25px;
+    z-index:;
+}
+
+div.submarine::after {
+    content: '';
+    height: 50px;
+    width: 50px;
+    background-image: radial-gradient(farthest-corner at 60% 40%,
+       white 0%, blue 50%);
+    border-radius: 50%;
+    box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.65);
+    margin: 15px 25px;
+    z-index: 1;
+}
+
 
 .movingLeft {
   transform:scaleX(-1);
