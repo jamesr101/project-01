@@ -139,99 +139,68 @@ display: none;
 
 
 .redFish {
-  background-color: red;
-  height: 60px;
-  margin: 20px 0;
-  border-radius: 50%;
-  position: relative;
-  /* animation: swim 1s infinite; */
+  background-image: url(../assets/images/001-fish.svg);
+  transform:scaleX(-1);
 }
+.redFishBackwards {
+  background-image: url(../assets/images/001-fish.svg);
 
-.redFish::before {
-  content: '';
-  width: 0;
-  height: 0;
-  border-top: 30px solid transparent;
-  border-bottom: 30px solid transparent;
-  border-left: 50px solid red;
-
-  left: 0px;
-  top: 0%;
-  position: absolute;
-  /* animation: flapFin 1s infinite; */
 }
-
-@keyframes flapFin {
-  0% { border-left: 50px solid red; }
-  50% { border-left: 10px solid red; }
-  100% { border-left: 50px solid red; }
-}
-
-@keyframes swim {
-  0% { width: 100px; }
-  50% { width: 90px; }
-  100% { width: 100px; }
-}
-
 
 .greenFish {
-  background-color: green;
-  height: 60px;
-  margin: 20px 0;
-  border-radius: 50%;
-  position: relative;
+  background-image: url(../assets/images/002-fish-1.svg);
 }
 
-.greenFish::after {
-  content: '';
-  width: 0;
-  height: 0;
-  border-top: 30px solid transparent;
-  border-bottom: 30px solid transparent;
-  border-left: 50px solid green;
-
-  top: 0px;
-  position: absolute;
+.greenFishBackwards {
+  background-image: url(../assets/images/002-fish-1.svg);
+  transform:scaleX(-1);
 }
+
 
 .submarine {
-  background-color: yellow;
-  /* background-image: url(../assets/images/jacquesCousteauSmall.jpeg); */
-  background-position: center;
-  background-size: contain;
-  display: grid;
-  border-radius: 30%;
-  position: relative;
-  height: 80px;
-  margin: 10px 0px;
+    background-image: url(../assets/images/031-submarine-1.svg);
 }
 
-div.submarine::before {
-    position: absolute;
-    content: '';
-    height: 50px;
-    width: 50px;
-    background-color: yellow;
-    border-radius: 40%;
-    bottom: 60px;
-    left: 25px;
-    z-index:;
-}
-
-div.submarine::after {
-    content: '';
-    height: 50px;
-    width: 50px;
-    background-image: radial-gradient(farthest-corner at 60% 40%,
-       white 0%, blue 50%);
-    border-radius: 50%;
-    box-shadow: 2px 3px 10px 0px rgba(0,0,0,0.65);
-    margin: 15px 25px;
-    z-index: 1;
-}
 
 .seafloor {
   background-color: brown;
+  position: relative;
+}
+
+
+.seaweed1 {
+  position: relative;
+}
+
+.seaweed1::after, .seaweed2::after, .seaweed3::after, .seaweed4::after{
+  content: '';
+  height: 100px;
+  width: 100px;
+  bottom: 100px;
+
+  position: absolute;
+  z-index: 5;
+  background-image: url(../assets/images/007-seaweed.svg);
+}
+
+
+
+.seaweed2::after {
+  background-image: url(../assets/images/008-seaweed-1.svg);
+}
+.seaweed3::after {
+  background-image: url(../assets/images/013-seaweed-5.svg);
+}
+.seaweed4::after {
+  background-image: url(../assets/images/010-seaweed-3.svg);
+}
+
+.seaweed5{
+  background-image: url(../assets/images/010-seaweed-3.svg);
+}
+
+.seaweed6{
+  background-image: url(../assets/images/hermit-crab.svg);
 }
 
 .movingLeft {

@@ -13,7 +13,7 @@ let moveFishIndex = 0;
 let spornFishIndex = 30;
 let timeLeft = initialTime;
 const fishInPlay = [];
-
+let movingLeft = false;
 
 
 
@@ -64,9 +64,14 @@ $(() => {
   //----- MOVING SUBMARINE -----
   function moveSub(number) {
 
-    $cells.eq(subLocation).removeClass('submarine');
+    $cells.eq(subLocation)
+      .removeClass('submarine')
+      .removeClass('movingLeft');
     subLocation += number;
     $cells.eq(subLocation).addClass('submarine');
+    if (movingLeft) {
+      $cells.eq(subLocation).addClass('movingLeft');
+    }
 
   }
 
@@ -90,10 +95,10 @@ $(() => {
     const redFish = new Fish(randomLocation(), 'redFish', 4, [-1],0,14,true);
     fishInPlay.push(redFish);
 
-    const greenFish2 = new Fish(randomLocation(), 'greenFish', 3, [-1,-1,-width],0,18,true);
+    const greenFish2 = new Fish(randomLocation(), 'greenFishBackwards', 3, [-1,-1,-width],0,18,true);
     fishInPlay.push(greenFish2);
 
-    const redFish2 = new Fish(randomLocation(), 'redFish', 4, [1],0,16,true);
+    const redFish2 = new Fish(randomLocation(), 'redFishBackwards', 4, [1],0,16,true);
     fishInPlay.push(redFish2);
 
     console.log(fishInPlay);
@@ -281,6 +286,9 @@ $(() => {
       if (e.keyCode === 39) {
         e.preventDefault();
 
+
+        movingLeft = false;
+
         if (mineLocations.includes(subLocation+1)) {
           console.log('BANG');
           mineExploded(subLocation+1);
@@ -293,6 +301,8 @@ $(() => {
       // --- LEFT ARROW ---
       if (e.keyCode === 37) {
         e.preventDefault();
+
+        movingLeft = true;
 
         if (mineLocations.includes(subLocation-1)) {
           console.log('BANG');
