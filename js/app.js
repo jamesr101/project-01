@@ -11,7 +11,10 @@ let gameRunning = false;
 let gameMechanicsTimerId = 0;
 let moveFishIndex = 0;
 let spornFishIndex = 30;
-const $fishInPlay = [];
+let timeLeft = initialTime;
+const fishInPlay = [];
+
+
 
 
 function randomLocation(){
@@ -28,13 +31,14 @@ $(() => {
 
   // ----- FISH CONSTRUCTOR -----
   class Fish {
-    constructor(location, type, pointsValue, movementPatternArray, movementPatternIndex, age){
+    constructor(location, type, pointsValue, movementPatternArray, movementPatternIndex, age, alive){
       this.location = location;
       this.type = type;
       this.pointsValue = pointsValue;
       this.movementPatternArray = movementPatternArray;
       this.movementPatternIndex = movementPatternIndex;
       this.age = age;
+      this.alive = alive;
     }
     move() {
       $cells.eq(this.location).removeClass(this.type);
@@ -44,23 +48,13 @@ $(() => {
         this.movementPatternIndex = 0;
       }
       if ((this.location < width)||(numberOfCells < this.location)||(this.age<0)){
-        this.remove();
+        this.alive = false;
         console.log('Fish swam off or died of old age');
       } else {
         $cells.eq(this.location).addClass(this.type);
         this.age--;
       }
     }
-    remove() {
-      const indexOfThisFish = $fishInPlay.findIndex(fish => fish.location === this.location);
-
-      if (indexOfThisFish !== -1) {
-        $fishInPlay.splice(indexOfThisFish, 1);
-      }
-
-      $cells.eq(this.location).removeClass(this.type);
-    }
-
   }
 
   //----- SUBMARINE SET UP ------
@@ -76,49 +70,84 @@ $(() => {
 
   }
 
+  // ---- MINES ----
+
+  let mineLocations = [];
+
+  function makeMines() {
+    mineLocations = [ 46, 25, 51];
+    mineLocations.forEach(location => $cells.eq(location).addClass('mine'));
+  }
+
+
+
   //----- FISH FUNCTIONS -----
   function spornFish(){
 
-    const greenFish = new Fish(randomLocation(), 'greenFish', 3, [1,1,width],0,20);
-    $fishInPlay.push(greenFish);
+    const greenFish = new Fish(randomLocation(), 'greenFish', 3, [1,1,width],0,20,true);
+    fishInPlay.push(greenFish);
 
-    const redFish = new Fish(randomLocation(), 'redFish', 4, [-1],0,14);
-    $fishInPlay.push(redFish);
+    const redFish = new Fish(randomLocation(), 'redFish', 4, [-1],0,14,true);
+    fishInPlay.push(redFish);
 
-    const greenFish2 = new Fish(randomLocation(), 'greenFish', 3, [-1,-1,-width],0,18);
-    $fishInPlay.push(greenFish2);
+    const greenFish2 = new Fish(randomLocation(), 'greenFish', 3, [-1,-1,-width],0,18,true);
+    fishInPlay.push(greenFish2);
 
-    const redFish2 = new Fish(randomLocation(), 'redFish', 4, [1],0,16);
-    $fishInPlay.push(redFish2);
+    const redFish2 = new Fish(randomLocation(), 'redFish', 4, [1],0,16,true);
+    fishInPlay.push(redFish2);
 
-    console.log($fishInPlay);
+    console.log(fishInPlay);
   }
 
 
   function moveFish(){
 
-    $.each($fishInPlay, function( key, value ) {
-      value.move();
-    });
+    fishInPlay.forEach(fish => fish.move());
 
   }
-
 
   function checkIfCaught(){
 
-    $.each($fishInPlay, function( key, value ) {
+    fishInPlay.forEach(fish => {
+      if((fish.location === subLocation) && (fish.alive)){
 
-      if(value.location === subLocation){
-
-        points += value.pointsValue;
+        points += fish.pointsValue;
         $pointDisplay.text(points);
 
-        this.remove();
+        fish.alive = false;
       }
-
     });
+  }
+
+  function removeDeadFish(){
+    fishInPlay.forEach(fish => {
+      if(fish.alive === false){
+        const indexOfDeadFish = fishInPlay.findIndex(fish => fish.alive === false);
+
+        if (indexOfDeadFish !== -1) {
+          fishInPlay.splice(indexOfDeadFish, 1);
+        }
+
+        $cells.eq(fish.location).removeClass(fish.type);
+      }
+    });
+  }
+
+
+  function mineExploded(location){
+    $cells.eq(location).removeClass('mine');
+    timeLeft -= 10;
+    $cells.eq(location).addClass('mineExploded');
+    setTimeout(()=>{
+      $cells.eq(location).removeClass('mineExploded');
+    }, 300);
+
+    const indexOfExplodedMine = mineLocations.indexOf(location);
+    mineLocations.splice(indexOfExplodedMine, 1);
 
   }
+
+
 
 
 
@@ -136,11 +165,14 @@ $(() => {
       if (spornFishIndex<30){
         spornFishIndex++;
       } else {
+
         spornFish();
         spornFishIndex = 0;
       }
 
       checkIfCaught();
+
+      removeDeadFish();
 
     }, 100);
 
@@ -154,7 +186,9 @@ $(() => {
     gameRunning = true;
     points = 0;
     $pointDisplay.text(points);
+    timeLeft = initialTime;
 
+    makeMines();
     timeCountDown();
     gameMechanics();
   }
@@ -176,12 +210,12 @@ $(() => {
 
   // ----- GAME TIMER COUNTDOWN -----
   function timeCountDown(){
-    let timeLeft = initialTime;
+
     countDownTimerId = setInterval(()=>{
       timeLeft--;
       $airTank.height(`${timeLeft/initialTime*100}%`);
 
-      if (timeLeft===0){
+      if (timeLeft < 0){
         endGame();
       }
 
@@ -216,29 +250,58 @@ $(() => {
     }
 
     // ----- SUBMARINE CONTROLS -----
-    if ((e.keyCode === 39) && ((subLocation+1)%width !== 0)){
-      //RIGHT arrow
-      (gameRunning) && moveSub(1);
-    }
-    if ((e.keyCode === 37) && (subLocation%width !== 0)){
-      //LEFT arrow
-      e.preventDefault();
-      (gameRunning) && moveSub(-1);
-      (gameRunning) && $cells.eq(subLocation).addClass('movingLeft');
-    }
-    if (e.keyCode === 40) {
-      //DOWN arrow
-      e.preventDefault();
+    if (gameRunning) {
 
-      // $cellContainer.scrollTo(0, -500);
+      // --- RIGHT ARROW ---
+      if (e.keyCode === 39) {
+        e.preventDefault();
 
-      // $cellContainer.scrollTop() ;
-      (gameRunning) && (subLocation+width < numberOfCells) && moveSub(width);
-    }
-    if (e.keyCode === 38) {
-      //UP arrow
-      e.preventDefault();
-      (gameRunning) && (subLocation-width+1 > 0) && moveSub(-width);
+        if (mineLocations.includes(subLocation+1)) {
+          console.log('BANG');
+          mineExploded(subLocation+1);
+        } else if ((subLocation+1)%width !== 0) {
+          moveSub(1);
+        }
+
+      }
+
+      // --- LEFT ARROW ---
+      if (e.keyCode === 37) {
+        e.preventDefault();
+
+        if (mineLocations.includes(subLocation-1)) {
+          console.log('BANG');
+          mineExploded(subLocation-1);
+        } else if (subLocation%width !== 0){
+          moveSub(-1);
+        }
+      }
+
+      // --- DOWN ARROW ---
+      if (e.keyCode === 40){
+        e.preventDefault();
+
+        if (mineLocations.includes(subLocation+width)) {
+          console.log('BANG');
+          mineExploded(subLocation+width);
+        } else if (subLocation+width < numberOfCells) {
+          moveSub(width);
+        }
+
+      }
+
+      // --- UP ARROW ---
+      if (e.keyCode === 38){
+        e.preventDefault();
+
+        if (mineLocations.includes(subLocation-width)) {
+          console.log('BANG');
+          mineExploded(subLocation-width);
+        } else if (subLocation-width+1 > 0){
+          moveSub(-width);
+        }
+      }
+
     }
 
   }
