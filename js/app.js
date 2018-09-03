@@ -1,7 +1,7 @@
 // ----- GAME SET UP [IMPORTANT: RESET IF BOARD SIZE CHANGES]-----
 const width = 8;
 const numberOfCells = 208;
-const subInitialLocation = 20;
+const subInitialLocation = 12;
 const initialTime = 60;
 
 // ----- ID AND INDEX SET UP -----
@@ -49,7 +49,7 @@ $(() => {
       }
       if ((this.location < width)||(numberOfCells < this.location)||(this.age<0)){
         this.alive = false;
-        console.log('Fish swam off or died of old age');
+        // console.log('Fish swam off or died of old age');
       } else {
         $cells.eq(this.location).addClass(this.type);
         this.age--;
@@ -145,6 +145,11 @@ $(() => {
     const indexOfExplodedMine = mineLocations.indexOf(location);
     mineLocations.splice(indexOfExplodedMine, 1);
 
+    $airTank.css('animation','warning 0.5s infinite');
+    setTimeout(()=>{
+      $airTank.css('animation','');
+    }, 1000);
+
   }
 
 
@@ -187,10 +192,15 @@ $(() => {
     points = 0;
     $pointDisplay.text(points);
     timeLeft = initialTime;
+    $airTank.css('animation','');
 
     makeMines();
     timeCountDown();
     gameMechanics();
+
+    subLocation = subInitialLocation;
+    $cells.eq(subLocation).addClass('submarine');
+    moveSub(0);
   }
 
 
@@ -199,10 +209,14 @@ $(() => {
 
     clearInterval(countDownTimerId);
     clearInterval(gameMechanicsTimerId);
+
+    $cells.eq(subLocation).removeClass('submarine');
+    $cellContainer.animate({scrollTop: 0}, 2000, 'swing');
   }
 
 
   function restartGame(){
+
     console.log('RESTART GAME');
     endGame();
     runGame();
@@ -215,6 +229,8 @@ $(() => {
       timeLeft--;
       $airTank.height(`${timeLeft/initialTime*100}%`);
 
+      (timeLeft < 20) && $airTank.css('animation','warning 0.5s infinite');
+
       if (timeLeft < 0){
         endGame();
       }
@@ -224,9 +240,14 @@ $(() => {
 
 
 
+
+
   // ----- USER CONTROLS -----
-  $(window).on('keydown', keypressed);
+  $(window).on('keyup', keypressed);
   $restartButton.on('click',restartGame);
+  $cellContainer.bind('mousewheel DOMMouseScroll touchmove', function () {
+    return false;
+  });
 
   function keypressed(e){
     if (e.keyCode === 83){
@@ -242,15 +263,19 @@ $(() => {
     if (e.keyCode === 81){
       console.log('Q pressed');
       //Q key
-      // $cellContainer.scrollTo(0, -500);
-      $cellContainer.animate({
-        scrollTop: $cellContainer.offset().top
-      }, 1000);
+      console.log('This is a test key');
       return false;
     }
 
+
+
+
+
     // ----- SUBMARINE CONTROLS -----
     if (gameRunning) {
+
+
+
 
       // --- RIGHT ARROW ---
       if (e.keyCode === 39) {
@@ -280,7 +305,10 @@ $(() => {
       // --- DOWN ARROW ---
       if (e.keyCode === 40){
         e.preventDefault();
+        if ($('.submarine').position().top > 500){
 
+          $('.cellContainer').animate({scrollTop: '+=100px'}, 100, 'swing');
+        }
         if (mineLocations.includes(subLocation+width)) {
           console.log('BANG');
           mineExploded(subLocation+width);
@@ -293,6 +321,12 @@ $(() => {
       // --- UP ARROW ---
       if (e.keyCode === 38){
         e.preventDefault();
+
+        // $('.cellContainer').scrollTop(100);
+        if ($('.submarine').position().top < 300){
+
+          $('.cellContainer').animate({scrollTop: '-=100px'}, 100, 'swing');
+        }
 
         if (mineLocations.includes(subLocation-width)) {
           console.log('BANG');

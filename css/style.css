@@ -8,7 +8,7 @@ h1 {
 }
 
 .container{
-  border: 3px solid black;
+
   display: flex;
   width: 1000px;
 }
@@ -30,10 +30,11 @@ h1 {
   flex-wrap: wrap;
   background-image: radial-gradient(farthest-corner at 50% 0px,
      lightskyblue 0%, #003399 100%);
-
-
 }
 
+.cellContainer::-webkit-scrollbar {
+display: none;
+}
 
 
 .airTank {
@@ -42,7 +43,17 @@ h1 {
   background-color: lightblue;
   border-bottom-left-radius: 18px;
   border-bottom-Right-radius: 18px;
+  transition: height 1s linear;
 }
+
+@keyframes warning {
+  0%   { background-color: lightblue;}
+  50% { background-color: red; }
+  100%   { background-color: lightblue; }
+}
+
+
+
 
 .cell {
   height: 100px;
@@ -129,10 +140,58 @@ h1 {
 
 .redFish {
   background-color: red;
+  height: 60px;
+  margin: 20px 0;
+  border-radius: 50%;
+  position: relative;
+  /* animation: swim 1s infinite; */
 }
+
+.redFish::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-left: 50px solid red;
+
+  left: 0px;
+  top: 0%;
+  position: absolute;
+  /* animation: flapFin 1s infinite; */
+}
+
+@keyframes flapFin {
+  0% { border-left: 50px solid red; }
+  50% { border-left: 10px solid red; }
+  100% { border-left: 50px solid red; }
+}
+
+@keyframes swim {
+  0% { width: 100px; }
+  50% { width: 90px; }
+  100% { width: 100px; }
+}
+
 
 .greenFish {
   background-color: green;
+  height: 60px;
+  margin: 20px 0;
+  border-radius: 50%;
+  position: relative;
+}
+
+.greenFish::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-left: 50px solid green;
+
+  top: 0px;
+  position: absolute;
 }
 
 .submarine {
