@@ -60,7 +60,7 @@ display: none;
   height: 100px;
   width: 100px;
   background-color: ;
-  border: 1px red solid;
+  /* border: 1px red solid; */
   position: relative;
   box-sizing: border-box;
 

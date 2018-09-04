@@ -14,7 +14,7 @@ let spornFishIndex = 30;
 let timeLeft = initialTime;
 const fishInPlay = [];
 let movingLeft = false;
-
+let subAtSurface = false;
 
 
 function randomLocation(){
@@ -100,7 +100,17 @@ $(() => {
       $cells.eq(subLocation).addClass('movingLeft');
     }
     console.log(subLocation);
+    isAtTop(subLocation);
   }
+
+  function isAtTop(location){
+    if (location < width) {
+      subAtSurface = true;
+    } else {
+      subAtSurface = false;
+    }
+  }
+
 
   // ---- MINES ----
 
@@ -258,6 +268,10 @@ $(() => {
 
       removeDeadFish();
 
+      if ((subAtSurface) && (timeLeft < (initialTime/2))){
+        endGame();
+      }
+
     }, 100);
 
   }
@@ -285,7 +299,7 @@ $(() => {
 
   function endGame(){
 
-    if (subLocation < 8){
+    if (subAtSurface){
       console.log('You got back to the top safely');
     } else {
       console.log('You drowned!');
