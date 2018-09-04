@@ -1,6 +1,6 @@
 // ----- GAME SET UP [IMPORTANT: RESET IF BOARD SIZE CHANGES]-----
 const width = 8;
-const numberOfCells = 208;
+const numberOfCells = 408;
 const subInitialLocation = 12;
 const initialTime = 60;
 
@@ -75,6 +75,7 @@ $(() => {
         $cells.eq(this.location).addClass(this.type);
         this.age--;
       }
+
     }
   }
 
@@ -101,7 +102,7 @@ $(() => {
   let mineLocations = [];
 
   function makeMines() {
-    mineLocations = [ 57, 78, 83, 130, 142, 156, 144, 167];
+    mineLocations = [ 57, 78, 83, 130, 142, 156, 144, 167, 226, 229, 233, 236, 239, 240, 243, 246, 313, 317, 320, 323, 327, 330, 332];
     mineLocations.forEach(location => $cells.eq(location).addClass('mine'));
   }
 
@@ -124,7 +125,7 @@ $(() => {
 
 
     if (Math.floor(Math.random()*4) === 0){
-      const treasure = new Fish(203, 'treasure', 20, [0],0,10,true);
+      const treasure = new Fish(numberOfCells-5, 'treasure', 20, [0],0,10,true);
       fishInPlay.push(treasure);
     }
 
@@ -396,7 +397,7 @@ $(() => {
         e.preventDefault();
 
         // $('.cellContainer').scrollTop(100);
-        if ($('.submarine').position().top < 300){
+        if ($('.submarine').position().top < 400){
 
           $('.cellContainer').animate({scrollTop: '-=100px'}, 100, 'swing');
         }
