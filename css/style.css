@@ -14,7 +14,7 @@ h1 {
   width: 1000px;
 }
 .airTankContainer{
-  border: 3px solid yellow;
+  border: 3px solid #FFD41D;
   box-sizing: border-box;
   background-color: gainsboro;
   width: 40px;
@@ -60,7 +60,7 @@ display: none;
   height: 100px;
   width: 100px;
   background-color: ;
-  /* border: 1px red solid; */
+  border: 1px red solid;
   position: relative;
   box-sizing: border-box;
 
@@ -212,7 +212,7 @@ display: none;
 }
 
 .mineExploded {
-  box-shadow: 0px 0px 300px 200px orange;
+  box-shadow: 0px 0px 300px 200px #FFA91F;
   background-color: white;
   border-radius: 50%;
 }
@@ -225,8 +225,10 @@ display: none;
     background-image: url(../assets/images/031-submarine-1.svg);
     animation: divingRight 1s infinite;
     position: relative;
-
 }
+
+
+
 
 .diveRight{
 
@@ -269,8 +271,29 @@ display: none;
 	}
 }
 
+.submarineFlash{
 
+}
 
+.shadow-pulse {
+
+}
+
+.submarineFlash::after{
+  content: '';
+  height: 50px;
+  width: 80px;
+  background-color: '';
+  z-index: -5;
+  position: absolute;
+  border-radius: 50%;
+  top: 40px;
+  left: 15px;
+  animation-name: shadowPulse;
+  animation-duration: .5s;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
 
 @keyframes shadowPulse {
     0% {
@@ -284,12 +307,9 @@ display: none;
     }
 }
 
-.shadow-pulse {
-    animation-name: shadowPulse;
-    animation-duration: .5s;
-    animation-iteration-count: 1;
-    animation-timing-function: linear;
-}
+
+
+
 
 
 

@@ -51,11 +51,19 @@ $(() => {
 
       if ((this.location !== subLocation) && !(mineLocations.includes(this.location)) && ((this.location < numberOfCells-1))){
 
-        if ((this.movementPatternArray[this.movementPatternIndex])>0){
-          $cells.eq(this.location).animate({right: '100px'}, 0, 'linear');
+        const travelAmount = this.movementPatternArray[this.movementPatternIndex];
+
+        if (travelAmount === width){
+          $cells.eq(this.location).css({top: '-100px'});
+          $cells.eq(this.location).animate({top: '0px'}, 200, 'linear');
+        } else if (travelAmount === -width){
+          $cells.eq(this.location).css({top: '100px'});
+          $cells.eq(this.location).animate({top: '0px'}, 200, 'linear');
+        } else if (travelAmount > 0){
+          $cells.eq(this.location).css({right: '100px'});
           $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
-        } if ((this.movementPatternArray[this.movementPatternIndex])<0) {
-          $cells.eq(this.location).animate({right: '-100px'}, 0, 'linear');
+        } else if (travelAmount < 0){
+          $cells.eq(this.location).css({right: '-100px'});
           $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
         }
 
@@ -68,9 +76,6 @@ $(() => {
       }
       if ((this.location < width)||(numberOfCells-1 < this.location)||(this.age<0)){
         this.alive = false;
-        // $cells.eq(this.location).animate({opacity: '0'}, 500);
-        // $cells.eq(this.location).css({opacity: '1'});
-        // console.log('Fish swam off or died of old age');
       } else {
         $cells.eq(this.location).addClass(this.type);
         this.age--;
@@ -173,9 +178,9 @@ $(() => {
       if((fish.location === subLocation) && (fish.alive)){
 
 
-        $cells.eq(subLocation).addClass('shadow-pulse');
+        $cells.eq(subLocation).addClass('submarineFlash');
         $cells.eq(subLocation).on('animationend', function(){
-          $cells.eq(subLocation).removeClass('shadow-pulse');
+          $cells.eq(subLocation).removeClass('submarineFlash');
           // do something else...
         });
 
@@ -424,7 +429,6 @@ $(() => {
 
         // $('.cellContainer').scrollTop(100);
         if ($('.submarine').position().top < 400){
-
           $('.cellContainer').animate({scrollTop: '-=100px'}, 100, 'swing');
         }
 
@@ -435,6 +439,7 @@ $(() => {
           moveSub(-width);
           $cells.eq(subLocation).css({top: '100px'});
           $cells.eq(subLocation).animate({top: '0px'}, 300);
+
         }
       }
 
