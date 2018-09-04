@@ -159,6 +159,9 @@ display: none;
   transform:scaleX(-1);
 }
 
+.treasure {
+  background-image: url(../assets/images/029-treasure.svg);
+}
 
 .submarine {
     background-image: url(../assets/images/031-submarine-1.svg);

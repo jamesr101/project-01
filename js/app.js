@@ -21,6 +21,10 @@ function randomLocation(){
   return Math.floor(Math.random()*(numberOfCells));
 }
 
+// function randomLocationOnSeaFloor(){
+//   return Math.floor(Math.random()*(numberOfCells));
+// }
+
 $(() => {
   console.log('DOM loaded');
   const $cells = $('.cell');
@@ -48,7 +52,7 @@ $(() => {
       if ((this.movementPatternArray[this.movementPatternIndex])>0){
         $cells.eq(this.location).animate({right: '100px'}, 0, 'linear');
         $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
-      } else {
+      } if ((this.movementPatternArray[this.movementPatternIndex])<0) {
         $cells.eq(this.location).animate({right: '-100px'}, 0, 'linear');
         $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
       }
@@ -116,6 +120,13 @@ $(() => {
 
     const redFish2 = new Fish(randomLocation(), 'redFishBackwards', 4, [1],0,16,true);
     fishInPlay.push(redFish2);
+
+
+    if (Math.floor(Math.random()*4) === 0){
+      const treasure = new Fish(203, 'treasure', 20, [0],0,10,true);
+      fishInPlay.push(treasure);
+    }
+
 
     console.log(fishInPlay);
   }
