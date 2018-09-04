@@ -49,13 +49,20 @@ $(() => {
       this.location += this.movementPatternArray[this.movementPatternIndex];
 
 
-      if ((this.movementPatternArray[this.movementPatternIndex])>0){
-        $cells.eq(this.location).animate({right: '100px'}, 0, 'linear');
-        $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
-      } if ((this.movementPatternArray[this.movementPatternIndex])<0) {
-        $cells.eq(this.location).animate({right: '-100px'}, 0, 'linear');
-        $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
+      if ((this.location !== subLocation) && !(mineLocations.includes(this.location))){
+        
+        if ((this.movementPatternArray[this.movementPatternIndex])>0){
+          $cells.eq(this.location).animate({right: '100px'}, 0, 'linear');
+          $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
+        } if ((this.movementPatternArray[this.movementPatternIndex])<0) {
+          $cells.eq(this.location).animate({right: '-100px'}, 0, 'linear');
+          $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
+        }
+
       }
+
+
+
 
 
       this.movementPatternIndex++;
@@ -142,6 +149,8 @@ $(() => {
 
     fishInPlay.forEach(fish => {
       if((fish.location === subLocation) && (fish.alive)){
+
+        // box-shadow: 0px 0px 300px 200px orange;
 
         points += fish.pointsValue;
         $pointDisplay.text(points);
@@ -321,7 +330,7 @@ $(() => {
           mineExploded(subLocation+1);
         } else if ((subLocation+1)%width !== 0) {
           moveSub(1);
-          $cells.eq(subLocation).animate({right: '100px'}, 0);
+          $cells.eq(subLocation).css({right: '100px'});
           $cells.eq(subLocation).animate({right: '0px'}, 200);
         }
 
@@ -338,7 +347,7 @@ $(() => {
           mineExploded(subLocation-1);
         } else if (subLocation%width !== 0){
           moveSub(-1);
-          $cells.eq(subLocation).animate({right: '-100px'}, 0);
+          $cells.eq(subLocation).css({right: '-100px'});
           $cells.eq(subLocation).animate({right: '0px'}, 200);
         }
       }
@@ -359,7 +368,7 @@ $(() => {
           mineExploded(subLocation+width);
         } else if (subLocation+width < numberOfCells) {
           moveSub(width);
-          $cells.eq(subLocation).animate({top: '-100px'}, 0);
+          $cells.eq(subLocation).css({top: '-100px'});
           $cells.eq(subLocation).animate({top: '0px'}, 300);
         }
 
@@ -380,7 +389,7 @@ $(() => {
           mineExploded(subLocation-width);
         } else if (subLocation-width+1 > 0){
           moveSub(-width);
-          $cells.eq(subLocation).animate({top: '100px'}, 0);
+          $cells.eq(subLocation).css({top: '100px'});
           $cells.eq(subLocation).animate({top: '0px'}, 300);
         }
       }
