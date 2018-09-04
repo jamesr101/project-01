@@ -63,6 +63,24 @@ display: none;
   border: 1px red solid;
   position: relative;
   box-sizing: border-box;
+
+}
+
+.bobbing {
+
+}
+
+@keyframes bobbing {
+	0% {
+         margin-bottom:0px;
+	}
+    50% {
+		 margin-bottom:10px;
+	}
+
+    100% {
+		 margin-bottom:0px;
+	}
 }
 
 .sky{
@@ -70,6 +88,7 @@ display: none;
   width: 100px;
   background-color: lightskyblue;
   position: relative;
+  animation: bobbing 2s infinite;
 }
 
 .sky::after {
@@ -81,7 +100,7 @@ display: none;
   border-radius: 50%;
   /* border: 1px solid red; */
   background-color: lightskyblue;
-  animation: wave 2s infinite;
+  animation: wave 4s infinite;
   animation-timing-function: ease-in-out;
 }
 .sky::before {
@@ -94,7 +113,7 @@ display: none;
   /* border: 1px solid green; */
   background-color: lightskyblue;
   left: -100%;
-  animation: waveLeft 2s infinite ;
+  animation: waveLeft 4s infinite ;
   animation-timing-function: ease-in-out;
 }
 
@@ -113,33 +132,6 @@ display: none;
   }
   100% { left: 0%; }
 }
-
-.mine {
-  border-radius: 50%;
-  position: relative;
-  z-index: 3;
-  animation: mineFlash 1s infinite;
-  transition: box-shadow 0.3s;
-}
-
-
-
-@keyframes mineFlash {
-  0%   { background-color: black; }
-  30%   { background-color: black; }
-  50% { background-color: red; }
-  70%   { background-color: black; }
-  100%   { background-color: black; }
-}
-
-.mineExploded {
-  box-shadow: 0px 0px 300px 200px orange;
-  background-color: white;
-  border-radius: 50%;
-}
-
-
-
 
 .redFish {
   background-image: url(../assets/images/001-fish.svg);
@@ -163,11 +155,70 @@ display: none;
   background-image: url(../assets/images/029-treasure.svg);
 }
 
+.mine {
+  border-radius: 50%;
+  position: relative;
+  z-index: 3;
+  animation: mineFlash 1s infinite;
+  transition: box-shadow 0.3s;
+  background-image: url(../assets/images/icons8-naval-mine-100.png);
+  transform:scaleX(1);
+}
+
+
+
+@keyframes mineFlash {
+  0%   {
+    background-color: ;
+    box-shadow:;
+  }
+  30%   { background-color: ; }
+  50% {
+    background-color: red;
+    box-shadow: 0px 0px 15px 10px red;
+  }
+  70%   { background-color: ; }
+  100%   {
+    background-color: ;
+    box-shadow:;
+  }
+}
+
+.mineExploded {
+  box-shadow: 0px 0px 300px 200px orange;
+  background-color: white;
+  border-radius: 50%;
+}
+
+
+
+
+
 .submarine {
     background-image: url(../assets/images/031-submarine-1.svg);
-
+    animation: diving-rotate 1s infinite;
     position: relative;
+    transform:scaleX(-1);
 }
+
+
+@keyframes diving-rotate {
+	0% {
+         transform:rotate(0deg);
+	}
+    50% {
+         transform:rotate(3deg);
+	}
+    75% {
+        transform:rotate(-2deg);
+	}
+    100% {
+        transform:rotate(0deg);
+	}
+}
+
+
+
 
 @keyframes shadowPulse {
     0% {
@@ -195,8 +246,21 @@ display: none;
 .seafloor {
   background-color: brown;
   position: relative;
+  animation: reverseBobbing 2s infinite;
 }
 
+@keyframes reverseBobbing {
+	0% {
+         margin-top:10px;
+	}
+    50% {
+		 margin-top:0px;
+	}
+
+    100% {
+		 margin-top:10px;
+	}
+}
 
 .seaweed1 {
   position: relative;
