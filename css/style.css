@@ -2,6 +2,7 @@ body {
   box-sizing: border-box;
   background-image: url(../assets/images/jacquesCousteauSmall.jpeg);
 }
+
 h1 {
   color: blue;
 
@@ -59,7 +60,9 @@ display: none;
   height: 100px;
   width: 100px;
   background-color: ;
-  /* border: 1px red solid; */
+  border: 1px red solid;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .sky{
@@ -159,7 +162,10 @@ display: none;
 
 .submarine {
     background-image: url(../assets/images/031-submarine-1.svg);
+
+    position: relative;
 }
+
 
 
 .seafloor {

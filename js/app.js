@@ -43,7 +43,23 @@ $(() => {
     move() {
       $cells.eq(this.location).removeClass(this.type);
       this.location += this.movementPatternArray[this.movementPatternIndex];
+
+
+      if ((this.movementPatternArray[this.movementPatternIndex])>0){
+        $cells.eq(this.location).animate({right: '100px'}, 0, 'linear');
+        $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
+      } else {
+        $cells.eq(this.location).animate({right: '-100px'}, 0, 'linear');
+        $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
+      }
+
+
       this.movementPatternIndex++;
+
+
+
+
+
       if (this.movementPatternIndex===this.movementPatternArray.length){
         this.movementPatternIndex = 0;
       }
@@ -294,6 +310,8 @@ $(() => {
           mineExploded(subLocation+1);
         } else if ((subLocation+1)%width !== 0) {
           moveSub(1);
+          $cells.eq(subLocation).animate({right: '100px'}, 0);
+          $cells.eq(subLocation).animate({right: '0px'}, 200);
         }
 
       }
@@ -309,12 +327,18 @@ $(() => {
           mineExploded(subLocation-1);
         } else if (subLocation%width !== 0){
           moveSub(-1);
+          $cells.eq(subLocation).animate({right: '-100px'}, 0);
+          $cells.eq(subLocation).animate({right: '0px'}, 200);
         }
       }
 
       // --- DOWN ARROW ---
       if (e.keyCode === 40){
         e.preventDefault();
+
+
+
+
         if ($('.submarine').position().top > 500){
 
           $('.cellContainer').animate({scrollTop: '+=100px'}, 100, 'swing');
@@ -324,6 +348,8 @@ $(() => {
           mineExploded(subLocation+width);
         } else if (subLocation+width < numberOfCells) {
           moveSub(width);
+          $cells.eq(subLocation).animate({top: '-100px'}, 0);
+          $cells.eq(subLocation).animate({top: '0px'}, 300);
         }
 
       }
@@ -343,6 +369,8 @@ $(() => {
           mineExploded(subLocation-width);
         } else if (subLocation-width+1 > 0){
           moveSub(-width);
+          $cells.eq(subLocation).animate({top: '100px'}, 0);
+          $cells.eq(subLocation).animate({top: '0px'}, 300);
         }
       }
 
