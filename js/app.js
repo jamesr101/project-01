@@ -50,7 +50,7 @@ $(() => {
 
 
       if ((this.location !== subLocation) && !(mineLocations.includes(this.location))){
-        
+
         if ((this.movementPatternArray[this.movementPatternIndex])>0){
           $cells.eq(this.location).animate({right: '100px'}, 0, 'linear');
           $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
@@ -145,11 +145,23 @@ $(() => {
 
   }
 
+
   function checkIfCaught(){
 
     fishInPlay.forEach(fish => {
       if((fish.location === subLocation) && (fish.alive)){
 
+
+        $cells.eq(subLocation).addClass('shadow-pulse');
+        $cells.eq(subLocation).on('animationend', function(){
+          $cells.eq(subLocation).removeClass('shadow-pulse');
+          // do something else...
+        });
+
+        // $cells.eq(subLocation).css({border: '10px solid orange'});
+        // $cells.eq(subLocation).css({boxShadow: '0px 0px 300px 200px orange;'});
+        // $cells.eq(subLocation).animate({right: '0px'}, 200);
+        // $cells.eq(subLocation).animate({border: '1px solid orange'}, 500);
         // box-shadow: 0px 0px 300px 200px orange;
 
         points += fish.pointsValue;
@@ -241,7 +253,7 @@ $(() => {
 
     subLocation = subInitialLocation;
     $cells.eq(subLocation).addClass('submarine');
-    moveSub(0);
+
   }
 
 
