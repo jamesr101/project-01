@@ -223,13 +223,22 @@ display: none;
 
 .submarine {
     background-image: url(../assets/images/031-submarine-1.svg);
-    animation: diving-rotate 1s infinite;
+    animation: divingRight 1s infinite;
     position: relative;
-    transform:scaleX(-1);
+
+}
+
+.diveRight{
+
+}
+
+.movingLeft {
+  animation: divingLeft 1s infinite;
+
 }
 
 
-@keyframes diving-rotate {
+@keyframes divingRight {
 	0% {
          transform:rotate(0deg);
 	}
@@ -241,6 +250,22 @@ display: none;
 	}
     100% {
         transform:rotate(0deg);
+	}
+}
+
+@keyframes divingLeft {
+
+	0% {
+         transform:rotate(0deg) scaleX(-1);
+	}
+    50% {
+         transform:rotate(3deg) scaleX(-1);
+	}
+    75% {
+        transform:rotate(-2deg) scaleX(-1);
+	}
+    100% {
+        transform:rotate(0deg) scaleX(-1);
 	}
 }
 
@@ -311,8 +336,4 @@ display: none;
 
 .seaweed6{
   background-image: url(../assets/images/hermit-crab.svg);
-}
-
-.movingLeft {
-  transform:scaleX(-1);
 }

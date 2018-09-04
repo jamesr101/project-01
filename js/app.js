@@ -49,7 +49,7 @@ $(() => {
       this.location += this.movementPatternArray[this.movementPatternIndex];
 
 
-      if ((this.location !== subLocation) && !(mineLocations.includes(this.location))){
+      if ((this.location !== subLocation) && !(mineLocations.includes(this.location)) && ((this.location < numberOfCells-1))){
 
         if ((this.movementPatternArray[this.movementPatternIndex])>0){
           $cells.eq(this.location).animate({right: '100px'}, 0, 'linear');
@@ -145,7 +145,7 @@ $(() => {
     }
 
     if (Math.random()< 0.20){
-      const octopus = new Fish(Math.floor(Math.random()*(100))+206, 'octopus', 60, [width, width, 1, -width,-width,-width, 1],0,10,true);
+      const octopus = new Fish(Math.floor(Math.random()*(100))+206, 'octopus', 25, [width, width, 1, -width,-width,-width, 1],0,10,true);
       fishInPlay.push(octopus);
     }
 
