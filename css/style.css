@@ -60,7 +60,7 @@ display: none;
   height: 100px;
   width: 100px;
   background-color: ;
-  border: 1px red solid;
+  /* border: 1px red solid; */
   position: relative;
   box-sizing: border-box;
 
@@ -111,7 +111,6 @@ display: none;
   height: 50px;
   bottom: -25px;
   border-radius: 50%;
-  /* border: 1px solid red; */
   background-color: lightskyblue;
   animation: wave 4s infinite;
   animation-timing-function: ease-in-out;
@@ -166,6 +165,21 @@ display: none;
 
 .treasure {
   background-image: url(../assets/images/029-treasure.svg);
+}
+.turtle {
+  background-image: url(../assets/images/019-turtle.svg);
+}
+.fish3 {
+  background-image: url(../assets/images/024-fish-10.svg);
+}
+
+.fish4 {
+  background-image: url(../assets/images/014-fish-6.svg);
+  transform:scaleX(-1);
+}
+
+.octopus {
+  background-image: url(../assets/images/017-octopus.svg);
 }
 
 .mine {

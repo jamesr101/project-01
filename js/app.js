@@ -124,11 +124,37 @@ $(() => {
     fishInPlay.push(redFish2);
 
 
-    if (Math.floor(Math.random()*4) === 0){
-      const treasure = new Fish(numberOfCells-5, 'treasure', 20, [0],0,10,true);
+    if (Math.random()< 0.25){
+      const treasure = new Fish(numberOfCells-5, 'treasure', 40, [0],0,10,true);
       fishInPlay.push(treasure);
     }
 
+    if (Math.random()< 0.25){
+      const turtle = new Fish(Math.floor(Math.random()*(24))+224, 'turtle', 30, [1,0],0,20,true);
+      fishInPlay.push(turtle);
+    }
+
+    if (Math.random()< 0.25){
+      const fish3 = new Fish(Math.floor(Math.random()*(40))+340, 'fish3', 15, [1,0,width,0],0,20,true);
+      fishInPlay.push(fish3);
+    }
+
+    if (Math.random()< 0.10){
+      const fish4 = new Fish(Math.floor(Math.random()*(16))+390, 'fish4', 60, [-1,-1,-2],0,10,true);
+      fishInPlay.push(fish4);
+    }
+
+    if (Math.random()< 0.20){
+      const octopus = new Fish(Math.floor(Math.random()*(100))+206, 'octopus', 60, [width, width, 1, -width,-width,-width, 1],0,10,true);
+      fishInPlay.push(octopus);
+    }
+
+
+
+
+    // //function randomLocation(){
+    //   return Math.floor(Math.random()*(16))+224;
+    // }
 
     console.log(fishInPlay);
   }
