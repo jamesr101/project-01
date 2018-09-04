@@ -252,6 +252,14 @@ $(() => {
 
 
   function endGame(){
+
+    if (subLocation < 8){
+      console.log('You got back to the top safely');
+    } else {
+      console.log('You drowned!');
+      points = 0;
+    }
+
     gameRunning = false;
 
     clearInterval(countDownTimerId);
@@ -279,6 +287,9 @@ $(() => {
       (timeLeft < 20) && $airTank.css('animation','warning 0.5s infinite');
 
       if (timeLeft < 0){
+        //if sub location is not at top subLocation
+
+
         endGame();
       }
 
