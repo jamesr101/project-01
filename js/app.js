@@ -61,21 +61,15 @@ $(() => {
 
       }
 
-
-
-
-
       this.movementPatternIndex++;
-
-
-
-
 
       if (this.movementPatternIndex===this.movementPatternArray.length){
         this.movementPatternIndex = 0;
       }
       if ((this.location < width)||(numberOfCells-1 < this.location)||(this.age<0)){
         this.alive = false;
+        // $cells.eq(this.location).animate({opacity: '0'}, 500);
+        // $cells.eq(this.location).css({opacity: '1'});
         // console.log('Fish swam off or died of old age');
       } else {
         $cells.eq(this.location).addClass(this.type);

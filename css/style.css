@@ -66,8 +66,8 @@ display: none;
 
 }
 
-.bobbing {
-
+.debob {
+    /* animation: reverseBobbing 2s infinite; */
 }
 
 @keyframes bobbing {
@@ -80,6 +80,19 @@ display: none;
 
     100% {
 		 margin-bottom:0px;
+	}
+}
+
+@keyframes reverseBobbing {
+	0% {
+         margin-top:10px;
+	}
+    50% {
+		 margin-top:0px;
+	}
+
+    100% {
+		 margin-top:10px;
 	}
 }
 
@@ -246,21 +259,10 @@ display: none;
 .seafloor {
   background-color: brown;
   position: relative;
-  animation: reverseBobbing 2s infinite;
+
 }
 
-@keyframes reverseBobbing {
-	0% {
-         margin-top:10px;
-	}
-    50% {
-		 margin-top:0px;
-	}
 
-    100% {
-		 margin-top:10px;
-	}
-}
 
 .seaweed1 {
   position: relative;
