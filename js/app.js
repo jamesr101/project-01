@@ -18,7 +18,7 @@ let movingLeft = false;
 
 
 function randomLocation(){
-  return Math.floor(Math.random()*(numberOfCells));
+  return Math.floor(Math.random()*(numberOfCells-1));
 }
 
 // function randomLocationOnSeaFloor(){
@@ -67,7 +67,7 @@ $(() => {
       if (this.movementPatternIndex===this.movementPatternArray.length){
         this.movementPatternIndex = 0;
       }
-      if ((this.location < width)||(numberOfCells < this.location)||(this.age<0)){
+      if ((this.location < width)||(numberOfCells-1 < this.location)||(this.age<0)){
         this.alive = false;
         // console.log('Fish swam off or died of old age');
       } else {
@@ -92,7 +92,7 @@ $(() => {
     if (movingLeft) {
       $cells.eq(subLocation).addClass('movingLeft');
     }
-
+    console.log(subLocation);
   }
 
   // ---- MINES ----
@@ -100,7 +100,7 @@ $(() => {
   let mineLocations = [];
 
   function makeMines() {
-    mineLocations = [ 46, 25, 51];
+    mineLocations = [ 57, 78, 83, 130, 142, 156, 144, 167];
     mineLocations.forEach(location => $cells.eq(location).addClass('mine'));
   }
 
