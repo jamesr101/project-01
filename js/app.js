@@ -340,13 +340,20 @@ $(() => {
     clearInterval(countDownTimerId);
     clearInterval(gameMechanicsTimerId);
 
-    $cells.eq(subLocation).removeClass('submarine');
+    const SubContainerOffset = $cells.eq(subLocation).offset();
+    console.log(SubContainerOffset);
 
-    $cellContainer.animate({scrollTop: 0 }, 2000, 'swing');
+    let scrollTime = 2000;
+    if (subLocation < 100) {
+      scrollTime = 500;
+    }
 
-    console.log('endgame() is being triggered');
+
+
+    $cellContainer.animate({scrollTop: 0 }, scrollTime, 'swing');
+
     $cellContainer.animate({scrollTop: 0}, ()=>{
-      console.log('endgamePanel fading in');
+      $cells.eq(subLocation).removeClass('submarine');
       $model.animate({opacity: 1}, 500);
       $ship.animate({left: '-300px'}, 2000, ()=>{
         $ship.css({left: '800px'});
