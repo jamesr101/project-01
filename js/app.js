@@ -1,7 +1,7 @@
 // ----- GAME SET UP [IMPORTANT: RESET IF BOARD SIZE CHANGES]-----
 const width = 8;
 const numberOfCells = 408;
-const subInitialLocation = 12;
+const subInitialLocation = 2;
 const initialTime = 60;
 
 // ----- ID AND INDEX SET UP -----
@@ -95,7 +95,7 @@ $(() => {
 
   //----- SUBMARINE SET UP ------
   let subLocation = subInitialLocation;
-  $cells.eq(subLocation).addClass('submarine');
+  // $cells.eq(subLocation).addClass('submarine');
 
   //----- MOVING SUBMARINE -----
   function moveSub(number) {
@@ -293,7 +293,10 @@ $(() => {
     gameRunning = true;
 
 
-    $ship.animate({left: '130px'}, 4000);
+    $ship.animate({left: '130px'}, 2000, ()=>{
+      subLocation = subInitialLocation;
+      $cells.eq(subLocation).addClass('submarine');
+    });
     // $ship.css({left: '1000px'}, ()=>{
     //
     // });
@@ -311,8 +314,7 @@ $(() => {
     timeCountDown();
     gameMechanics();
 
-    subLocation = subInitialLocation;
-    $cells.eq(subLocation).addClass('submarine');
+
 
   }
 
@@ -346,7 +348,7 @@ $(() => {
     $cellContainer.animate({scrollTop: 0}, ()=>{
       console.log('endgamePanel fading in');
       $model.animate({opacity: 1}, 500);
-      $ship.animate({left: '-300px'}, 6000, ()=>{
+      $ship.animate({left: '-300px'}, 2000, ()=>{
         $ship.css({left: '800px'});
       });
     });
