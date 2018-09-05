@@ -290,12 +290,13 @@ $(() => {
 
   // ----- GAME START AND END FUNCTIONS -----
   function runGame(){
-    gameRunning = true;
+
 
 
     $ship.animate({left: '130px'}, 2000, ()=>{
       subLocation = subInitialLocation;
       $cells.eq(subLocation).addClass('submarine');
+      gameRunning = true;
     });
     // $ship.css({left: '1000px'}, ()=>{
     //
@@ -320,22 +321,23 @@ $(() => {
 
 
   function endGame(){
+    gameRunning = false;
 
     if (subAtSurface){
       $modelTitle.text('Well done!');
       $endMessage.text('You got back to the surface safely.');
-      console.log('You got back to the top safely');
+
     } else {
-      $modelTitle.text('Oh no, you drowned!');
+      $modelTitle.text('Oh no, you ran out of air!');
       $endMessage.text('You need to get back to the surface before your air supply runs out.');
-      console.log('You drowned!');
+
       points = 0;
     }
 
     $finalPoints.text(`You have ${points} points.`);
     $startButton.text('Dive again (D)');
 
-    gameRunning = false;
+
 
     clearInterval(countDownTimerId);
     clearInterval(gameMechanicsTimerId);
@@ -401,12 +403,12 @@ $(() => {
   });
 
   function keypressed(e){
-    if (e.keyCode === 83){
+    if ((e.keyCode === 83) && gameRunning){
       console.log('S pressed - GAME ENDED');
       //S key
       endGame();
     }
-    if (e.keyCode === 68){
+    if ((e.keyCode === 68) && !gameRunning){
       console.log('D pressed - GAME STARTED');
       //R key
       runGame();

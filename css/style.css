@@ -1,16 +1,58 @@
 body {
   box-sizing: border-box;
-  background-image: url(../assets/images/jacquesCousteauSmall.jpeg);
+  background-color: #e9e3d5;
   font-family: 'Open Sans', sans-serif;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+h1 {
+  color: #FFD41D;
+  font-size: 40px;
+
+  display: inline-block;
+
 }
 
-h1 {
-  color: blue;
+.header {
+  background: white;
+    padding: 10px 60px;
+      margin: 20px;
+      display: flex;
+      align-items: center;
+      border-radius: 40px;
+}
 
+.displayWindow{
+  background-color: ;
+  box-sizing: border-box;
+  width: 800px;
+  height: 700px;
+  position: absolute;
+  z-index: 20;
+  border-radius: 60px;
+  box-shadow: 0px 0px 0px 100px #FFD41D;
+
+}
+
+.rivet{
+  background-color: #FFA91F;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.diverLogo {
+  height: 80px;
+  width: 80px;
+  display: inline-block;
+  padding: 0 20px;
 }
 
 .container{
-  border: 1px solid black;
+  z-index: 10;
+
   position: relative;
   display: flex;
   width: 800px;
@@ -46,7 +88,7 @@ h1 {
 .airTankContainer::after{
   position: absolute;
   content: '';
-  background-color: silver;
+  background-color: #d3cdbf;
   height: 60px;
   width: 60px;
   bottom: 98%;
@@ -55,11 +97,20 @@ h1 {
   z-index: 0;
 }
 
+.restartButton {
+  position: absolute;
+  z-index: 10;
+  top: 10px;
+  right: 10px;
+}
 
 .cellContainer {
+  box-sizing: border-box;
+
   width: 800px;
   height: 700px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   display: flex;
   flex-wrap: wrap;
   background-image: radial-gradient(farthest-corner at 50% 0px,
@@ -84,7 +135,7 @@ h1 {
 
 .model{
   position: absolute;
-  background-color: #FFD41D;
+  background-color: white;
   z-index: 10;
   padding: 20px;
   max-width: 60%;
@@ -105,6 +156,7 @@ h1 {
   padding: 0;
   font-size: 40px;
   z-index: 10;
+  opacity: .95;
 }
 
 h1 {
@@ -112,7 +164,7 @@ h1 {
 }
 
 h2 {
-  color: red;
+  color: #FFD41D;
   font-family: 'Exo 2', sans-serif;
 }
 
@@ -192,18 +244,19 @@ button {
 .sky::after {
   content: '';
   position: absolute;
-  width: 100%;
+  width: 110%;
   height: 50px;
   bottom: -25px;
   border-radius: 50%;
   background-color: lightskyblue;
   animation: wave 4s infinite;
   animation-timing-function: ease-in-out;
+  box-shadow: 4px 5px 0px 0px rgba(255,255,255,0.75);
 }
 .sky::before {
   content: '';
   position: absolute;
-  width: 100%;
+  width: 110%;
   height: 50px;
   bottom: -25px;
   border-radius: 50%;
@@ -212,6 +265,7 @@ button {
   left: -100%;
   animation: waveLeft 4s infinite ;
   animation-timing-function: ease-in-out;
+  box-shadow: 4px 5px 0px 0px rgba(255,255,255,0.75);
 }
 
 @keyframes wave {
