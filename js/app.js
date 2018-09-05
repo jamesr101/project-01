@@ -37,6 +37,7 @@ $(() => {
   const $endMessage = $('.endMessage');
   const $modelTitle = $('.modelTitle');
   const $finalPoints = $('.finalPoints');
+  const $ship = $('.ship');
 
 
 
@@ -292,6 +293,12 @@ $(() => {
     gameRunning = true;
 
 
+    $ship.animate({left: '130px'}, 4000);
+    // $ship.css({left: '1000px'}, ()=>{
+    //
+    // });
+    // $ship.animate({left: '130px'}, 4000);
+
     $model.animate({opacity: 0}, 500);
 
 
@@ -339,8 +346,13 @@ $(() => {
     $cellContainer.animate({scrollTop: 0}, ()=>{
       console.log('endgamePanel fading in');
       $model.animate({opacity: 1}, 500);
-
+      $ship.animate({left: '-300px'}, 6000, ()=>{
+        $ship.css({left: '800px'});
+      });
     });
+
+
+
   }
 
 
