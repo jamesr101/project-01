@@ -63,16 +63,16 @@ $(() => {
         const travelAmount = this.movementPatternArray[this.movementPatternIndex];
 
         if (travelAmount === width){
-          $cells.eq(this.location).css({top: '-100px'});
+          $cells.eq(this.location).css({top: '-80px'});
           $cells.eq(this.location).animate({top: '0px'}, 200, 'linear');
         } else if (travelAmount === -width){
-          $cells.eq(this.location).css({top: '100px'});
+          $cells.eq(this.location).css({top: '80px'});
           $cells.eq(this.location).animate({top: '0px'}, 200, 'linear');
         } else if (travelAmount > 0){
-          $cells.eq(this.location).css({right: '100px'});
+          $cells.eq(this.location).css({right: '80px'});
           $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
         } else if (travelAmount < 0){
-          $cells.eq(this.location).css({right: '-100px'});
+          $cells.eq(this.location).css({right: '-80px'});
           $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
         }
 
@@ -200,14 +200,7 @@ $(() => {
         $cells.eq(subLocation).addClass('submarineFlash');
         $cells.eq(subLocation).on('animationend', function(){
           $cells.eq(subLocation).removeClass('submarineFlash');
-          // do something else...
         });
-
-        // $cells.eq(subLocation).css({border: '10px solid orange'});
-        // $cells.eq(subLocation).css({boxShadow: '0px 0px 300px 200px orange;'});
-        // $cells.eq(subLocation).animate({right: '0px'}, 200);
-        // $cells.eq(subLocation).animate({border: '1px solid orange'}, 500);
-        // box-shadow: 0px 0px 300px 200px orange;
 
         points += fish.pointsValue;
         $pointDisplay.text(points);
@@ -293,7 +286,7 @@ $(() => {
 
 
 
-    $ship.animate({left: '130px'}, 2000, ()=>{
+    $ship.animate({left: '100px'}, 2000, ()=>{
       subLocation = subInitialLocation;
       $cells.eq(subLocation).addClass('submarine');
       gameRunning = true;
@@ -442,7 +435,7 @@ $(() => {
           mineExploded(subLocation+1);
         } else if ((subLocation+1)%width !== 0) {
           moveSub(1);
-          $cells.eq(subLocation).css({right: '100px'});
+          $cells.eq(subLocation).css({right: '80px'});
           $cells.eq(subLocation).animate({right: '0px'}, 200);
         }
 
@@ -459,7 +452,7 @@ $(() => {
           mineExploded(subLocation-1);
         } else if (subLocation%width !== 0){
           moveSub(-1);
-          $cells.eq(subLocation).css({right: '-100px'});
+          $cells.eq(subLocation).css({right: '-80px'});
           $cells.eq(subLocation).animate({right: '0px'}, 200);
         }
       }
@@ -473,14 +466,14 @@ $(() => {
 
         if ($('.submarine').position().top > 500){
 
-          $('.cellContainer').animate({scrollTop: '+=100px'}, 100, 'swing');
+          $('.cellContainer').animate({scrollTop: '+=80px'}, 100, 'swing');
         }
         if (mineLocations.includes(subLocation+width)) {
           console.log('BANG');
           mineExploded(subLocation+width);
         } else if (subLocation+width < numberOfCells) {
           moveSub(width);
-          $cells.eq(subLocation).css({top: '-100px'});
+          $cells.eq(subLocation).css({top: '-80px'});
           $cells.eq(subLocation).animate({top: '0px'}, 300);
         }
 
@@ -492,7 +485,7 @@ $(() => {
 
         // $('.cellContainer').scrollTop(100);
         if ($('.submarine').position().top < 400){
-          $('.cellContainer').animate({scrollTop: '-=100px'}, 100, 'swing');
+          $('.cellContainer').animate({scrollTop: '-=80px'}, 100, 'swing');
         }
 
         if (mineLocations.includes(subLocation-width)) {
@@ -500,7 +493,7 @@ $(() => {
           mineExploded(subLocation-width);
         } else if (subLocation-width+1 > 0){
           moveSub(-width);
-          $cells.eq(subLocation).css({top: '100px'});
+          $cells.eq(subLocation).css({top: '80px'});
           $cells.eq(subLocation).animate({top: '0px'}, 300);
 
         }

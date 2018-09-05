@@ -9,7 +9,7 @@ body {
 }
 h1 {
   color: #FFD41D;
-  font-size: 40px;
+  font-size: 32px;
 
   display: inline-block;
 
@@ -17,31 +17,13 @@ h1 {
 
 .header {
   background: white;
-    padding: 10px 60px;
-      margin: 20px;
+    padding: 8px 52px;
+      margin: 16px;
       display: flex;
       align-items: center;
-      border-radius: 40px;
+      border-radius: 32px;
 }
 
-.displayWindow{
-  background-color: ;
-  box-sizing: border-box;
-  width: 800px;
-  height: 700px;
-  position: absolute;
-  z-index: 20;
-  border-radius: 60px;
-  box-shadow: 0px 0px 0px 100px #FFD41D;
-
-}
-
-.rivet{
-  background-color: #FFA91F;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
 
 .diverLogo {
   height: 80px;
@@ -55,21 +37,22 @@ h1 {
 
   position: relative;
   display: flex;
-  width: 800px;
+  width: 640px;
 }
+
 .airTankContainer{
   position: absolute;
-  height: 350px;
-  left: 20px;
-  bottom: 20px;
-  border: 8px solid #FFD41D;
+  height: 280px;
+  left: 16px;
+  bottom: 16px;
+  border: 6px solid #FFD41D;
   box-sizing: border-box;
   background-color: gainsboro;
-  width: 80px;
+  width: 70px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  border-radius: 40px;
+  border-radius: 36px;
   z-index: 4;
   opacity: 0.95;
 }
@@ -78,10 +61,10 @@ h1 {
   position: absolute;
   content: '';
   background-color: black;
-  height: 60px;
-  width: 30px;
+  height: 48px;
+  width: 24px;
   bottom: 100%;
-  right: 20px;
+  right: 16px;
   z-index: 0;
 }
 
@@ -89,10 +72,10 @@ h1 {
   position: absolute;
   content: '';
   background-color: #d3cdbf;
-  height: 60px;
-  width: 60px;
+  height: 48px;
+  width: 48px;
   bottom: 98%;
-  right: 5px;
+  right: 4px;
   border-radius: 50%;
   z-index: 0;
 }
@@ -107,8 +90,8 @@ h1 {
 .cellContainer {
   box-sizing: border-box;
 
-  width: 800px;
-  height: 700px;
+  width: 640px;
+  height: 560px;
   overflow-y: scroll;
   overflow-x: hidden;
   display: flex;
@@ -129,8 +112,6 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: white;
-  opacity: 0.5; */
 }
 
 .model{
@@ -140,21 +121,21 @@ h1 {
   padding: 20px;
   max-width: 60%;
   box-shadow:
-    0px 0px 0px 10px lightblue,
+    0px 0px 0px 10px #003399,
     0px 0px 0px 20px lightskyblue,
-    0px 0px 0px 30px #003399,
-    0px 0px 60px 30px black;
+    0px 0px 0px 30px lightblue,
+    0px 0px 120px 30px black;
 }
 
 .pointsOnScreen{
   position: absolute;
-  right: 40px;
+  right: 32px;
   bottom: 0;
   /* height: 50px; */
   color: red;
   font-family: 'Exo 2', sans-serif;
   padding: 0;
-  font-size: 40px;
+  font-size: 32px;
   z-index: 10;
   opacity: .95;
 }
@@ -166,6 +147,7 @@ h1 {
 h2 {
   color: #FFD41D;
   font-family: 'Exo 2', sans-serif;
+  margin-top: 0px;
 }
 
 button {
@@ -194,8 +176,8 @@ button {
 
 
 .cell {
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   background-color: ;
   /* border: 1px red solid; */
   position: relative;
@@ -234,8 +216,8 @@ button {
 }
 
 .sky{
-  height: 250px;
-  width: 100px;
+  height: 200px;
+  width: 80px;
   background-color: lightskyblue;
   position: relative;
   animation: bobbing 2s infinite;
@@ -245,27 +227,27 @@ button {
   content: '';
   position: absolute;
   width: 110%;
-  height: 50px;
-  bottom: -25px;
+  height: 40px;
+  bottom: -20px;
   border-radius: 50%;
   background-color: lightskyblue;
   animation: wave 4s infinite;
   animation-timing-function: ease-in-out;
-  box-shadow: 4px 5px 0px 0px rgba(255,255,255,0.75);
+  box-shadow: 3px 4px 0px 0px rgba(255,255,255,0.75);
 }
 .sky::before {
   content: '';
   position: absolute;
   width: 110%;
-  height: 50px;
-  bottom: -25px;
+  height: 40px;
+  bottom: -20px;
   border-radius: 50%;
   /* border: 1px solid green; */
   background-color: lightskyblue;
   left: -100%;
   animation: waveLeft 4s infinite ;
   animation-timing-function: ease-in-out;
-  box-shadow: 4px 5px 0px 0px rgba(255,255,255,0.75);
+  box-shadow: 3px 4px 0px 0px rgba(255,255,255,0.75);
 }
 
 @keyframes wave {
@@ -328,6 +310,7 @@ button {
   animation: mineFlash 1s infinite;
   transition: box-shadow 0.3s;
   background-image: url(../assets/images/icons8-naval-mine-100.png);
+  background-size: cover;
   transform:scaleX(1);
 }
 
@@ -341,7 +324,7 @@ button {
   30%   { background-color: ; }
   50% {
     background-color: red;
-    box-shadow: 0px 0px 15px 10px red;
+    box-shadow: 0px 0px 12px 8px red;
   }
   70%   { background-color: ; }
   100%   {
@@ -351,10 +334,10 @@ button {
 }
 
 .mineExploded {
-  box-shadow: 0px 0px 300px 200px #FFA91F;
-  margin: 15px;
-  height: 70px;
-  width: 70px;
+  box-shadow: 0px 0px 240px 160px #FFA91F;
+  margin: 10px;
+  height: 60px;
+  width: 60px;
   background-color: white;
   border-radius: 50%;
 }
@@ -362,11 +345,11 @@ button {
 .ship{
   position: absolute;
 
-  top: 68px;
-  left: 800px;
+  top: 54px;
+  left: 640px;
 
-  height: 300px;
-  width: 300px;
+  height: 240px;
+  width: 240px;
   z-index: 0;
 
   background-image: url(../assets/images/004-ship-1.svg);
@@ -439,14 +422,14 @@ button {
 
 .submarineFlash::after{
   content: '';
-  height: 50px;
-  width: 80px;
+  height: 40px;
+  width: 64px;
   background-color: '';
   z-index: -5;
   position: absolute;
   border-radius: 50%;
-  top: 40px;
-  left: 15px;
+  top: 32px;
+  left: 12px;
   animation-name: shadowPulse;
   animation-duration: .5s;
   animation-iteration-count: 1;
@@ -455,7 +438,7 @@ button {
 
 @keyframes shadowPulse {
     0% {
-        box-shadow: 0px 0px 300px 100px white;
+        box-shadow: 0px 0px 240px 80px white;
         background-color: white;
     }
 
@@ -487,9 +470,9 @@ button {
 
 .seaweed1::after, .seaweed2::after, .seaweed3::after, .seaweed4::after{
   content: '';
-  height: 100px;
-  width: 100px;
-  bottom: 100px;
+  height: 80px;
+  width: 80px;
+  bottom: 80px;
 
   position: absolute;
   z-index: 5;
