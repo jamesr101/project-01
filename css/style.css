@@ -10,7 +10,7 @@ h1 {
 }
 
 .container{
-
+  position: relative;
   display: flex;
   width: 1000px;
 }
@@ -61,6 +61,18 @@ h1 {
     0px 0px 0px 20px lightskyblue,
     0px 0px 0px 30px #003399,
     0px 0px 60px 30px black;
+}
+
+.pointsOnScreen{
+  position: absolute;
+  right: 200px;
+  bottom: 0;
+  /* height: 50px; */
+  color: red;
+  font-family: 'Exo 2', sans-serif;
+  padding: 0 40px;
+  font-size: 40px;
+  z-index: 10;
 }
 
 h1 {
@@ -276,9 +288,6 @@ button {
   background-size: cover;
 
   animation: divingRight 1s infinite;
-
-
-
 }
 
 
