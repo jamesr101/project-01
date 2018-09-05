@@ -1,6 +1,7 @@
 body {
   box-sizing: border-box;
   background-image: url(../assets/images/jacquesCousteauSmall.jpeg);
+  font-family: 'Open Sans', sans-serif;
 }
 
 h1 {
@@ -31,11 +32,51 @@ h1 {
   flex-wrap: wrap;
   background-image: radial-gradient(farthest-corner at 50% 0px,
      lightskyblue 0%, #003399 100%);
+  position: relative;
 }
 
 .cellContainer::-webkit-scrollbar {
-display: none;
+  display: none;
 }
+
+.modelContainer{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: white;
+  opacity: 0.5; */
+}
+
+.model{
+  position: absolute;
+  background-color: #FFD41D;
+  z-index: 10;
+  padding: 20px;
+  max-width: 60%;
+  box-shadow:
+    0px 0px 0px 10px lightblue,
+    0px 0px 0px 20px lightskyblue,
+    0px 0px 0px 30px #003399,
+    0px 0px 60px 30px black;
+}
+
+h1 {
+  font-family: 'Exo 2', sans-serif;
+}
+
+h2 {
+  color: red;
+  font-family: 'Exo 2', sans-serif;
+}
+
+button {
+  color: red;
+  font-family: 'Exo 2', sans-serif;
+}
+
 
 
 .airTank {

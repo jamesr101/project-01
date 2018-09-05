@@ -28,10 +28,18 @@ function randomLocation(){
 $(() => {
   console.log('DOM loaded');
   const $cells = $('.cell');
-  const $pointDisplay = $('#points');
+  const $pointDisplay = $('.points');
   const $restartButton = $('.restartButton');
+  const $startButton = $('.startButton');
   const $airTank = $('.airTank');
   const $cellContainer = $('.cellContainer');
+  const $model = $('.model');
+  const $endMessage = $('.endMessage');
+  const $modelTitle = $('.modelTitle');
+  const $finalPoints = $('.finalPoints');
+
+
+
 
   // ----- FISH CONSTRUCTOR -----
   class Fish {
@@ -282,6 +290,11 @@ $(() => {
   // ----- GAME START AND END FUNCTIONS -----
   function runGame(){
     gameRunning = true;
+
+
+    $model.animate({opacity: 0}, 500);
+
+
     points = 0;
     $pointDisplay.text(points);
     timeLeft = initialTime;
@@ -300,11 +313,18 @@ $(() => {
   function endGame(){
 
     if (subAtSurface){
+      $modelTitle.text('Well done!');
+      $endMessage.text('You got back to the surface safely.');
       console.log('You got back to the top safely');
     } else {
+      $modelTitle.text('Oh no, you drowned!');
+      $endMessage.text('You need to get back to the surface before your air supply runs out.');
       console.log('You drowned!');
       points = 0;
     }
+
+    $finalPoints.text(`You have ${points} points.`);
+    $startButton.text('Dive again (D)');
 
     gameRunning = false;
 
@@ -312,16 +332,18 @@ $(() => {
     clearInterval(gameMechanicsTimerId);
 
     $cells.eq(subLocation).removeClass('submarine');
-    $cellContainer.animate({scrollTop: 0}, 2000, 'swing');
+
+    $cellContainer.animate({scrollTop: 0 }, 2000, 'swing');
+
+    console.log('endgame() is being triggered');
+    $cellContainer.animate({scrollTop: 0}, ()=>{
+      console.log('endgamePanel fading in');
+      $model.animate({opacity: 1}, 500);
+
+    });
   }
 
 
-  function restartGame(){
-
-    console.log('RESTART GAME');
-    endGame();
-    runGame();
-  }
 
   // ----- GAME TIMER COUNTDOWN -----
   function timeCountDown(){
@@ -333,8 +355,11 @@ $(() => {
       (timeLeft < 20) && $airTank.css('animation','warning 0.5s infinite');
 
       if (timeLeft < 0){
-        //if sub location is not at top subLocation
 
+        console.log('Air run out, game is ending');
+
+        points = 0;
+        $pointDisplay.text(points);
 
         endGame();
       }
@@ -348,7 +373,8 @@ $(() => {
 
   // ----- USER CONTROLS -----
   $(window).on('keyup', keypressed);
-  $restartButton.on('click',restartGame);
+  $restartButton.on('click',endGame);
+  $startButton.on('click',runGame);
   $cellContainer.bind('mousewheel DOMMouseScroll touchmove', function () {
     return false;
   });
@@ -359,10 +385,10 @@ $(() => {
       //S key
       endGame();
     }
-    if (e.keyCode === 82){
-      console.log('R pressed - GAME STARTED');
+    if (e.keyCode === 68){
+      console.log('D pressed - GAME STARTED');
       //R key
-      restartGame();
+      runGame();
     }
     if (e.keyCode === 81){
       console.log('Q pressed');

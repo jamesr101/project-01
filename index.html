@@ -3,17 +3,29 @@
 <head>
   <meta charset="utf-8">
   <title>WDI Project 1</title>
+  <link href="https://fonts.googleapis.com/css?family=Exo+2:400,700|Open+Sans" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="./js/app.js" charset="utf-8"></script>
 </head>
 <body>
   <h1>Hello SeaWorld!</h1>
-  <p>Points are: <span id="points">0</span></p>
-  <button type="button" name="button" class="restartButton">Start Game</button>
+  <p>Points are: <span class="points">0</span></p>
+  <button type="button" name="button" class="restartButton">End Game (S)</button>
   <div class="container">
 
     <div class="cellContainer">
+
+      <div class="modelContainer">
+        <div class="model">
+          <h2 class="modelTitle">Find the rare fish!</h2>
+          <span class="endMessage">Help Jacques Cousteau capture specimens of rare fish. The rarer the fish, the more points. Watch out for underwater mines and make sure you return to the surface before your air supply runs out.</span>
+          <p class="finalPoints"></p>
+          <button type="button" name="button" class="startButton">Start! (D)</button>
+        </div>
+
+      </div>
+
 
       <div class="sky"></div>
       <div class="sky"></div>
