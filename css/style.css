@@ -30,11 +30,11 @@ h1 {
   width: 80px;
   display: inline-block;
   padding: 0 20px;
-  transition: all 0.5s ease;
+  transition: all 1.6s cubic-bezier(0.83,-0.97, 0.24, 2.08);
 }
 
 .diverLogo:hover {
-  transform: rotate(360deg);
+  transform: rotate(720deg);
 }
 
 .container{
@@ -360,6 +360,28 @@ button {
 
 .octopus {
   background-image: url(../assets/images/017-octopus.svg);
+}
+
+.swordfish {
+  background-image: url(../assets/images/021-swordfish.svg);
+}
+
+.shark {
+  background-image: url(../assets/images/022-great-hammerhead.svg);
+  transform:scaleX(-1);
+}
+
+.urchin {
+  background-image: url(../assets/images/028-sea-urchin.svg);
+}
+
+.clown {
+  background-image: url(../assets/images/005-fish-4.svg);
+}
+
+.puffer {
+  background-image: url(../assets/images/006-fish-5.svg);
+  transform:scaleX(-1);
 }
 
 .mine {

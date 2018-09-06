@@ -39,6 +39,26 @@ $(() => {
 
 
   //----- SOUNDS -----
+
+  function muteMe(elem) {
+    elem.muted = true;
+    elem.pause();
+  }
+
+  mutePage();
+
+  function mutePage() {
+    const videos = document.querySelectorAll('video'),
+      audios = document.querySelectorAll('audio');
+    console.log('muted');
+    [].forEach.call(videos, function(video) {
+      muteMe(video);
+    });
+    [].forEach.call(audios, function(audio) {
+      muteMe(audio);
+
+    });
+  }
   const audioBubbling = new Audio('./assets/sounds/Bubbling-SoundBible.com-1684132696.wav');
   const audioMotorHum = new Audio('./assets/sounds/Cargo Plane Cabin Ambiance-SoundBible.com-589803489.wav');
   const audioDepthCharge = new Audio('./assets/sounds/DepthCharge.wav');
@@ -117,6 +137,7 @@ $(() => {
       .removeClass('movingLeft');
     subLocation += travelAmount;
 
+    console.log(subLocation);
     $cells.eq(subLocation).addClass('submarine');
 
     movingLeft && $cells.eq(subLocation).addClass('movingLeft');
@@ -189,8 +210,8 @@ $(() => {
       fishInPlay.push(treasure);
     }
 
-    if (Math.random()< 0.25){
-      const turtle = new Fish(Math.floor(Math.random()*(24))+224, 'turtle', 30, [1,0],0,20,true);
+    if (Math.random()< 0.4){
+      const turtle = new Fish(Math.floor(Math.random()*(40))+224, 'turtle', 30, [1,0],0,20,true);
       fishInPlay.push(turtle);
     }
 
@@ -199,14 +220,38 @@ $(() => {
       fishInPlay.push(fish3);
     }
 
-    if (Math.random()< 0.10){
-      const fish4 = new Fish(Math.floor(Math.random()*(16))+390, 'fish4', 60, [-1,-1,-2],0,10,true);
+    if (Math.random()< 0.25){
+      const fish4 = new Fish(Math.floor(Math.random()*(26))+376, 'fish4', 60, [-1,-1,-2, -width],0,15,true);
       fishInPlay.push(fish4);
     }
 
-    if (Math.random()< 0.20){
-      const octopus = new Fish(Math.floor(Math.random()*(100))+206, 'octopus', 25, [width, width, 1, -width,-width,-width, 1],0,10,true);
+    if (Math.random()< 0.50){
+      const octopus = new Fish(Math.floor(Math.random()*(100))+206, 'octopus', 25, [width, width, 1, -width,-width,-width, 1],0,16,true);
       fishInPlay.push(octopus);
+    }
+
+    if (Math.random()< 0.4){
+      const swordfish = new Fish(Math.floor(Math.random()*(30))+350, 'swordfish', 40, [2, 2], 0,14,true);
+      fishInPlay.push(swordfish);
+    }
+
+    if (Math.random()< 0.4){
+      const shark = new Fish(Math.floor(Math.random()*(30))+330, 'shark', 50, [-1,-1, 0, 0, -width],0,12,true);
+      fishInPlay.push(shark);
+    }
+
+    const urchin = new Fish(Math.floor(Math.random()*(30))+330, 'urchin', 35, [0],0,8,true);
+    fishInPlay.push(urchin);
+
+
+    if (Math.random()< 0.6){
+      const clown = new Fish(randomLocation()-55, 'clown', 20, [0,1,1],0,25,true);
+      fishInPlay.push(clown);
+    }
+
+    if (Math.random()< 0.5){
+      const puffer = new Fish(randomLocation()-88, 'puffer', 30, [0,-1,-1, width],0,16,true);
+      fishInPlay.push(puffer);
     }
 
   }
@@ -297,6 +342,7 @@ $(() => {
 
 
   function gameMechanics (){
+    mutePage();
 
     gameMechanicsTimerId = setInterval(()=>{
 
