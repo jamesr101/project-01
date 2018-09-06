@@ -40,11 +40,14 @@ h1 {
   width: 640px;
 }
 
-.airTank{
+.airTankWrapper {
   position: absolute;
-  height: 280px;
   left: 16px;
   bottom: 16px;
+}
+.airTank{
+  position: relative;
+  height: 280px;
   border: 6px solid #FFD41D;
   box-sizing: border-box;
   background-color: gainsboro;
@@ -55,31 +58,60 @@ h1 {
   border-radius: 36px;
   z-index: 4;
   opacity: 0.95;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
-
-.airTank::before{
+.airTankValve {
   position: absolute;
-  content: '';
-  background-color: black;
-  height: 48px;
-  width: 24px;
-  bottom: 100%;
-  right: 16px;
-  z-index: 0;
-}
 
-.airTank::after{
-  position: absolute;
-  content: '';
   background-color: #d3cdbf;
   height: 48px;
   width: 48px;
-  bottom: 98%;
-  right: 4px;
+  top: -25px;
+  left: 11px;
   border-radius: 50%;
-  z-index: 0;
+  z-index: 11;
+
+  display: grid;
+  justify-content: center;
+  align-items: center;
 }
+
+.airTankValve::after{
+  content: '';
+  background-color: #beb5a1;
+  opacity: 0.5;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+
+}
+
+.airTankNozzle{
+  position: absolute;
+  background-color: black;
+  height: 48px;
+  width: 24px;
+  top: -34px;
+  left: 23px;
+  z-index: 6;
+  border-radius: 3px;
+  display: grid;
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+
+.airTankNozzle::after {
+  position: relative;
+  content: '';
+  background-color: black;
+  height: 48px;
+  width: 14px;
+  transform: rotate(136deg);
+  top: 17px;
+  right: -15px;
+  border-radius: 5px;
+}
+
 
 .buttonContainer {
   display: flex;
@@ -172,10 +204,8 @@ button {
 
 .airSupply {
   width: 100%;
-  height: 92%;
+  height: 100%;
   background-color: lightblue;
-  border-bottom-left-radius: 38px;
-  border-bottom-Right-radius: 38px;
   transition: height 1s linear;
 }
 
