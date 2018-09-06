@@ -28,11 +28,11 @@ $(() => {
   const $pointDisplay = $('.points');
   const $restartButton = $('.restartButton');
   const $startButton = $('.startButton');
-  const $airTank = $('.airTank');
+  const $airSupply = $('.airSupply');
   const $cellContainer = $('.cellContainer');
-  const $model = $('.model');
+  const $modal = $('.modal');
   const $endMessage = $('.endMessage');
-  const $modelTitle = $('.modelTitle');
+  const $modalTitle = $('.modalTitle');
   const $finalPoints = $('.finalPoints');
   const $ship = $('.ship');
 
@@ -112,11 +112,7 @@ $(() => {
   }
 
   function isAtTop(location){
-    if (location < width) {
-      subAtSurface = true;
-    } else {
-      subAtSurface = false;
-    }
+    (location < width) ? (subAtSurface = true) : (subAtSurface = false);
   }
 
 
@@ -131,16 +127,16 @@ $(() => {
   //----- FISH FUNCTIONS -----
   function spornFish(){
 
-    const greenFish = new Fish(randomLocation(), 'greenFish', 3, [1,1,width],0,20,true);
+    const greenFish = new Fish(randomLocation(), 'greenFish', 4, [1,1,width],0,20,true);
     fishInPlay.push(greenFish);
 
-    const redFish = new Fish(randomLocation(), 'redFish', 4, [-1],0,14,true);
+    const redFish = new Fish(randomLocation(), 'redFish', 3, [-1],0,14,true);
     fishInPlay.push(redFish);
 
-    const greenFish2 = new Fish(randomLocation(), 'greenFishBackwards', 3, [-1,-1,-width],0,18,true);
+    const greenFish2 = new Fish(randomLocation(), 'greenFishBackwards', 4, [-1,-1,-width],0,18,true);
     fishInPlay.push(greenFish2);
 
-    const redFish2 = new Fish(randomLocation(), 'redFishBackwards', 4, [1],0,16,true);
+    const redFish2 = new Fish(randomLocation(), 'redFishBackwards', 3, [1],0,16,true);
     fishInPlay.push(redFish2);
 
 
@@ -184,17 +180,19 @@ $(() => {
     fishInPlay.forEach(fish => {
       if((fish.location === subLocation) && (fish.alive)){
 
+        subCatchingFishAnimation();
 
-        $cells.eq(subLocation).addClass('submarineFlash');
-        $cells.eq(subLocation).on('animationend', function(){
-          $cells.eq(subLocation).removeClass('submarineFlash');
-        });
-
-        points += fish.pointsValue;
-        $pointDisplay.text(points);
+        updatePoints(fish.pointsValue);
 
         fish.alive = false;
       }
+    });
+  }
+
+  function subCatchingFishAnimation(){
+    $cells.eq(subLocation).addClass('submarineFlash');
+    $cells.eq(subLocation).on('animationend', function(){
+      $cells.eq(subLocation).removeClass('submarineFlash');
     });
   }
 
@@ -214,25 +212,31 @@ $(() => {
 
 
   function mineExploded(location){
-    $cells.eq(location).removeClass('mine');
     timeLeft -= 10;
+
+    explodingMineAmination(location);
+    airSupplyWarningAnimation();
+
+    //Splice Mine from array of Active Mines (mineLocations)
+    const indexOfExplodedMine = mineLocations.indexOf(location);
+    mineLocations.splice(indexOfExplodedMine, 1);
+
+  }
+
+  function explodingMineAmination(location){
+    $cells.eq(location).removeClass('mine');
     $cells.eq(location).addClass('mineExploded');
     setTimeout(()=>{
       $cells.eq(location).removeClass('mineExploded');
     }, 300);
-
-    const indexOfExplodedMine = mineLocations.indexOf(location);
-    mineLocations.splice(indexOfExplodedMine, 1);
-
-    $airTank.css('animation','warning 0.5s infinite');
-    setTimeout(()=>{
-      $airTank.css('animation','');
-    }, 1000);
-
   }
 
-
-
+  function airSupplyWarningAnimation(){
+    $airSupply.css('animation','warning 0.5s infinite');
+    setTimeout(()=>{
+      $airSupply.css('animation','');
+    }, 1000);
+  }
 
 
   function gameMechanics (){
@@ -249,43 +253,40 @@ $(() => {
       if (spornFishIndex<30){
         spornFishIndex++;
       } else {
-
         spornFish();
         spornFishIndex = 0;
       }
 
       checkIfCaught();
-
       removeDeadFish();
+      checkIfGameHasEnd();
 
-      if ((subAtSurface) && (timeLeft < (initialTime/2))){
-        endGame();
-      }
 
     }, 100);
 
   }
 
+  function checkIfGameHasEnd(){
+    if ((subAtSurface) && (timeLeft < (initialTime/2))){
+      endGame();
+    }
+
+    if (timeLeft < 0){
+      updatePoints(0);
+      endGame();
+    }
+  }
 
 
 
   // ----- GAME START AND END FUNCTIONS -----
   function runGame(){
 
+    startGameAnimations();
 
-    $ship.animate({left: '100px'}, 2000, ()=>{
-      subLocation = subInitialLocation;
-      $cells.eq(subLocation).addClass('submarine');
-      gameRunning = true;
-    });
-
-    $model.animate({opacity: 0}, 500);
-
-
-    points = 0;
-    $pointDisplay.text(points);
+    updatePoints(0);
     timeLeft = initialTime;
-    $airTank.css('animation','');
+    $airSupply.css('animation','');
 
     makeMines();
     timeCountDown();
@@ -293,71 +294,79 @@ $(() => {
 
   }
 
+  function startGameAnimations(){
+
+    $ship.animate({left: '100px'}, 2000, ()=>{
+      subLocation = subInitialLocation;
+      $cells.eq(subLocation).addClass('submarine');
+      gameRunning = true;
+    });
+
+    $modal.animate({opacity: 0}, 500);
+  }
 
   function endGame(){
     gameRunning = false;
 
+    clearInterval(countDownTimerId);
+    clearInterval(gameMechanicsTimerId);
+
+    updateModalMessage();
+    endGameAnimations();
+
+  }
+
+  function updateModalMessage(){
     if (subAtSurface){
 
-      $modelTitle.text('Well done!');
+      $modalTitle.text('Well done!');
       $endMessage.text('You got back to the surface safely.');
 
     } else {
 
-      $modelTitle.text('Oh no, you ran out of air!');
+      $modalTitle.text('Oh no, you ran out of air!');
       $endMessage.text('You need to get back to the surface before your air supply runs out.');
 
-      points = 0;
     }
 
     $finalPoints.text(`You have ${points} points.`);
     $startButton.text('Dive again (D)');
 
+  }
 
-
-    clearInterval(countDownTimerId);
-    clearInterval(gameMechanicsTimerId);
-
-
+  function endGameAnimations(){
     let scrollTime = 2000;
-    if (subLocation < 100) {
-      scrollTime = 500;
-    }
+    (subLocation < 100) &&  (scrollTime = 500);
 
-    $cellContainer.animate({scrollTop: 0 }, scrollTime, 'swing');
-
-    $cellContainer.animate({scrollTop: 0}, ()=>{
+    $cellContainer.animate({scrollTop: 0 }, scrollTime, 'swing', ()=>{
       $cells.eq(subLocation).removeClass('submarine');
-      $model.animate({opacity: 1}, 500);
+      $modal.animate({opacity: 1}, 500);
       $ship.animate({left: '-300px'}, 2000, ()=>{
         $ship.css({left: '800px'});
       });
     });
-
-
-
   }
 
 
+  function updatePoints(score){
+    if (score === 0) {
+      points = score;
+    } else {
+      points += score;
+    }
+    $pointDisplay.text(points);
+  }
 
   // ----- GAME TIMER COUNTDOWN -----
   function timeCountDown(){
 
     countDownTimerId = setInterval(()=>{
       timeLeft--;
-      $airTank.height(`${timeLeft/initialTime*100}%`);
+      $airSupply.height(`${timeLeft/initialTime*100}%`);
 
-      (timeLeft < 20) && $airTank.css('animation','warning 0.5s infinite');
+      (timeLeft < 20) && $airSupply.css('animation','warning 0.5s infinite');
 
-      if (timeLeft < 0){
 
-        console.log('Air run out, game is ending');
-
-        points = 0;
-        $pointDisplay.text(points);
-
-        endGame();
-      }
 
     }, 1000);
   }
@@ -402,8 +411,6 @@ $(() => {
     if (gameRunning) {
 
 
-
-
       // --- RIGHT ARROW ---
       if (e.keyCode === 39) {
 
@@ -437,9 +444,6 @@ $(() => {
 
       // --- DOWN ARROW ---
       if (e.keyCode === 40){
-        e.preventDefault();
-
-        console.log(`sub p top ${$('.submarine').position().top}`);
 
 
         if ($('.submarine').position().top > 240){
@@ -459,8 +463,6 @@ $(() => {
 
       // --- UP ARROW ---
       if (e.keyCode === 38){
-
-        console.log(`sub p top ${$('.submarine').position().top}`);
 
 
         // $('.cellContainer').scrollTop(100);

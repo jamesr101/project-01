@@ -40,7 +40,7 @@ h1 {
   width: 640px;
 }
 
-.airTankContainer{
+.airTank{
   position: absolute;
   height: 280px;
   left: 16px;
@@ -55,9 +55,10 @@ h1 {
   border-radius: 36px;
   z-index: 4;
   opacity: 0.95;
+  /* overflow: hidden; */
 }
 
-.airTankContainer::before{
+.airTank::before{
   position: absolute;
   content: '';
   background-color: black;
@@ -68,7 +69,7 @@ h1 {
   z-index: 0;
 }
 
-.airTankContainer::after{
+.airTank::after{
   position: absolute;
   content: '';
   background-color: #d3cdbf;
@@ -114,7 +115,7 @@ button.startButton {
   display: none;
 }
 
-.modelContainer{
+.modalContainer{
   position: absolute;
   height: 100%;
   width: 100%;
@@ -123,7 +124,7 @@ button.startButton {
   justify-content: center;
 }
 
-.model{
+.modal{
   position: absolute;
   background-color: white;
   z-index: 10;
@@ -169,7 +170,7 @@ button {
 
 
 
-.airTank {
+.airSupply {
   width: 100%;
   height: 92%;
   background-color: lightblue;
