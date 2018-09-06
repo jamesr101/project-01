@@ -3,6 +3,7 @@ const width = 8;
 const numberOfCells = 408;
 const subInitialLocation = 2;
 const initialTime = 60;
+const sizeOfCell = 80;
 
 // ----- ID AND INDEX SET UP -----
 let countDownTimerId = 0;
@@ -61,16 +62,16 @@ $(() => {
 
 
         if (travelAmount === width){
-          $cells.eq(this.location).css({top: '-80px'});
+          $cells.eq(this.location).css({top: `${-sizeOfCell}px`});
           $cells.eq(this.location).animate({top: '0px'}, 200, 'linear');
         } else if (travelAmount === -width){
-          $cells.eq(this.location).css({top: '80px'});
+          $cells.eq(this.location).css({top: `${sizeOfCell}px`});
           $cells.eq(this.location).animate({top: '0px'}, 200, 'linear');
         } else if (travelAmount > 0){
-          $cells.eq(this.location).css({right: '80px'});
+          $cells.eq(this.location).css({right: `${sizeOfCell}px`});
           $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
         } else if (travelAmount < 0){
-          $cells.eq(this.location).css({right: '-80px'});
+          $cells.eq(this.location).css({right: `${-sizeOfCell}px`});
           $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
         }
 
@@ -97,33 +98,34 @@ $(() => {
   let subLocation = subInitialLocation;
 
   //----- MOVING SUBMARINE -----
-  function moveSub(number) {
+  function moveSub(travelAmount) {
 
     $cells.eq(subLocation)
       .removeClass('submarine')
       .removeClass('movingLeft');
-    subLocation += number;
+    subLocation += travelAmount;
 
     $cells.eq(subLocation).addClass('submarine');
 
     movingLeft && $cells.eq(subLocation).addClass('movingLeft');
 
     isAtTop(subLocation);
-    animateSub(number);
+    animateSub(travelAmount);
   }
 
-  function animateSub(number) {
-    if (number === 1){
-      $cells.eq(subLocation).css({right: '80px'});
+
+  function animateSub(travelAmount) {
+    if (travelAmount === 1){
+      $cells.eq(subLocation).css({right: `${sizeOfCell}px`});
       $cells.eq(subLocation).animate({right: '0px'}, 200);
-    } else if (number === -1){
-      $cells.eq(subLocation).css({right: '-80px'});
+    } else if (travelAmount === -1){
+      $cells.eq(subLocation).css({right: `${-sizeOfCell}px`});
       $cells.eq(subLocation).animate({right: '0px'}, 200);
-    } else if (number === width){
-      $cells.eq(subLocation).css({top: '-80px'});
+    } else if (travelAmount === width){
+      $cells.eq(subLocation).css({top: `${-sizeOfCell}px`});
       $cells.eq(subLocation).animate({top: '0px'}, 300);
-    } else if (number === -width){
-      $cells.eq(subLocation).css({top: '80px'});
+    } else if (travelAmount === -width){
+      $cells.eq(subLocation).css({top: `${sizeOfCell}px`});
       $cells.eq(subLocation).animate({top: '0px'}, 300);
     }
   }
@@ -456,7 +458,7 @@ $(() => {
 
         if ($('.submarine').position().top > 240){
 
-          $('.cellContainer').animate({scrollTop: '+=80px'}, 100, 'swing');
+          $('.cellContainer').animate({scrollTop: '+=80px'}, 300, 'swing');
         }
         if (mineLocations.includes(subLocation+width)) {
           mineExploded(subLocation+width);
@@ -472,13 +474,13 @@ $(() => {
 
         // $('.cellContainer').scrollTop(100);
         if ($('.submarine').position().top < 180){
-          $('.cellContainer').animate({scrollTop: '-=80px'}, 100, 'swing');
+          $('.cellContainer').animate({scrollTop: '-=80px'}, 300, 'swing');
         }
 
         if (mineLocations.includes(subLocation-width)) {
           mineExploded(subLocation-width);
         } else if (subLocation-width+1 > 0){
-          moveSub(-width)
+          moveSub(-width);
         }
       }
 

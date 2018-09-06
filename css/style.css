@@ -30,6 +30,11 @@ h1 {
   width: 80px;
   display: inline-block;
   padding: 0 20px;
+  transition: all 0.5s ease;
+}
+
+.diverLogo:hover {
+  transform: rotate(360deg);
 }
 
 .container{
@@ -88,7 +93,7 @@ h1 {
 
 .airTankNozzle{
   position: absolute;
-  background-color: black;
+  background-color: #5B5751;
   height: 48px;
   width: 24px;
   top: -34px;
@@ -103,7 +108,7 @@ h1 {
 .airTankNozzle::after {
   position: relative;
   content: '';
-  background-color: black;
+  background-color: #5B5751;
   height: 48px;
   width: 14px;
   transform: rotate(136deg);
