@@ -103,13 +103,31 @@ $(() => {
       .removeClass('submarine')
       .removeClass('movingLeft');
     subLocation += number;
+
     $cells.eq(subLocation).addClass('submarine');
-    if (movingLeft) {
-      $cells.eq(subLocation).addClass('movingLeft');
-    }
-    // console.log(subLocation);
+
+    movingLeft && $cells.eq(subLocation).addClass('movingLeft');
+
     isAtTop(subLocation);
+    animateSub(number);
   }
+
+  function animateSub(number) {
+    if (number === 1){
+      $cells.eq(subLocation).css({right: '80px'});
+      $cells.eq(subLocation).animate({right: '0px'}, 200);
+    } else if (number === -1){
+      $cells.eq(subLocation).css({right: '-80px'});
+      $cells.eq(subLocation).animate({right: '0px'}, 200);
+    } else if (number === width){
+      $cells.eq(subLocation).css({top: '-80px'});
+      $cells.eq(subLocation).animate({top: '0px'}, 300);
+    } else if (number === -width){
+      $cells.eq(subLocation).css({top: '80px'});
+      $cells.eq(subLocation).animate({top: '0px'}, 300);
+    }
+  }
+
 
   function isAtTop(location){
     (location < width) ? (subAtSurface = true) : (subAtSurface = false);
@@ -374,7 +392,6 @@ $(() => {
 
 
 
-
   // ----- USER CONTROLS -----
   $(window).on('keyup', keypressed);
   $restartButton.on('click',endGame);
@@ -405,11 +422,8 @@ $(() => {
 
 
 
-
-
     // ----- SUBMARINE CONTROLS -----
     if (gameRunning) {
-
 
       // --- RIGHT ARROW ---
       if (e.keyCode === 39) {
@@ -417,12 +431,9 @@ $(() => {
         movingLeft = false;
 
         if (mineLocations.includes(subLocation+1)) {
-          console.log('BANG');
           mineExploded(subLocation+1);
         } else if ((subLocation+1)%width !== 0) {
           moveSub(1);
-          $cells.eq(subLocation).css({right: '80px'});
-          $cells.eq(subLocation).animate({right: '0px'}, 200);
         }
 
       }
@@ -433,12 +444,9 @@ $(() => {
         movingLeft = true;
 
         if (mineLocations.includes(subLocation-1)) {
-          console.log('BANG');
           mineExploded(subLocation-1);
         } else if (subLocation%width !== 0){
           moveSub(-1);
-          $cells.eq(subLocation).css({right: '-80px'});
-          $cells.eq(subLocation).animate({right: '0px'}, 200);
         }
       }
 
@@ -451,12 +459,9 @@ $(() => {
           $('.cellContainer').animate({scrollTop: '+=80px'}, 100, 'swing');
         }
         if (mineLocations.includes(subLocation+width)) {
-          console.log('BANG');
           mineExploded(subLocation+width);
         } else if (subLocation+width < numberOfCells) {
           moveSub(width);
-          $cells.eq(subLocation).css({top: '-80px'});
-          $cells.eq(subLocation).animate({top: '0px'}, 300);
         }
 
       }
@@ -471,13 +476,9 @@ $(() => {
         }
 
         if (mineLocations.includes(subLocation-width)) {
-          console.log('BANG');
           mineExploded(subLocation-width);
         } else if (subLocation-width+1 > 0){
-          moveSub(-width);
-          $cells.eq(subLocation).css({top: '80px'});
-          $cells.eq(subLocation).animate({top: '0px'}, 300);
-
+          moveSub(-width)
         }
       }
 
