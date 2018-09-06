@@ -21,9 +21,6 @@ function randomLocation(){
   return Math.floor(Math.random()*(numberOfCells-1));
 }
 
-// function randomLocationOnSeaFloor(){
-//   return Math.floor(Math.random()*(numberOfCells));
-// }
 
 $(() => {
   console.log('DOM loaded');
@@ -62,6 +59,7 @@ $(() => {
 
         const travelAmount = this.movementPatternArray[this.movementPatternIndex];
 
+
         if (travelAmount === width){
           $cells.eq(this.location).css({top: '-80px'});
           $cells.eq(this.location).animate({top: '0px'}, 200, 'linear');
@@ -93,9 +91,10 @@ $(() => {
     }
   }
 
+
+
   //----- SUBMARINE SET UP ------
   let subLocation = subInitialLocation;
-  // $cells.eq(subLocation).addClass('submarine');
 
   //----- MOVING SUBMARINE -----
   function moveSub(number) {
@@ -108,7 +107,7 @@ $(() => {
     if (movingLeft) {
       $cells.eq(subLocation).addClass('movingLeft');
     }
-    console.log(subLocation);
+    // console.log(subLocation);
     isAtTop(subLocation);
   }
 
@@ -123,14 +122,11 @@ $(() => {
 
   // ---- MINES ----
 
-  let mineLocations = [];
+  const mineLocations = [ 57, 78, 83, 130, 142, 156, 144, 167, 226, 229, 233, 236, 239, 240, 243, 246, 313, 317, 320, 323, 327, 330, 332];
 
   function makeMines() {
-    mineLocations = [ 57, 78, 83, 130, 142, 156, 144, 167, 226, 229, 233, 236, 239, 240, 243, 246, 313, 317, 320, 323, 327, 330, 332];
     mineLocations.forEach(location => $cells.eq(location).addClass('mine'));
   }
-
-
 
   //----- FISH FUNCTIONS -----
   function spornFish(){
@@ -173,14 +169,6 @@ $(() => {
       fishInPlay.push(octopus);
     }
 
-
-
-
-    // //function randomLocation(){
-    //   return Math.floor(Math.random()*(16))+224;
-    // }
-
-    console.log(fishInPlay);
   }
 
 
@@ -285,16 +273,11 @@ $(() => {
   function runGame(){
 
 
-
     $ship.animate({left: '100px'}, 2000, ()=>{
       subLocation = subInitialLocation;
       $cells.eq(subLocation).addClass('submarine');
       gameRunning = true;
     });
-    // $ship.css({left: '1000px'}, ()=>{
-    //
-    // });
-    // $ship.animate({left: '130px'}, 4000);
 
     $model.animate({opacity: 0}, 500);
 
@@ -308,8 +291,6 @@ $(() => {
     timeCountDown();
     gameMechanics();
 
-
-
   }
 
 
@@ -317,10 +298,12 @@ $(() => {
     gameRunning = false;
 
     if (subAtSurface){
+
       $modelTitle.text('Well done!');
       $endMessage.text('You got back to the surface safely.');
 
     } else {
+
       $modelTitle.text('Oh no, you ran out of air!');
       $endMessage.text('You need to get back to the surface before your air supply runs out.');
 
@@ -335,15 +318,11 @@ $(() => {
     clearInterval(countDownTimerId);
     clearInterval(gameMechanicsTimerId);
 
-    const SubContainerOffset = $cells.eq(subLocation).offset();
-    console.log(SubContainerOffset);
 
     let scrollTime = 2000;
     if (subLocation < 100) {
       scrollTime = 500;
     }
-
-
 
     $cellContainer.animate({scrollTop: 0 }, scrollTime, 'swing');
 
@@ -396,6 +375,8 @@ $(() => {
   });
 
   function keypressed(e){
+    e.preventDefault();
+
     if ((e.keyCode === 83) && gameRunning){
       console.log('S pressed - GAME ENDED');
       //S key
@@ -425,8 +406,6 @@ $(() => {
 
       // --- RIGHT ARROW ---
       if (e.keyCode === 39) {
-        e.preventDefault();
-
 
         movingLeft = false;
 
@@ -443,7 +422,6 @@ $(() => {
 
       // --- LEFT ARROW ---
       if (e.keyCode === 37) {
-        e.preventDefault();
 
         movingLeft = true;
 
@@ -461,10 +439,10 @@ $(() => {
       if (e.keyCode === 40){
         e.preventDefault();
 
+        console.log(`sub p top ${$('.submarine').position().top}`);
 
 
-
-        if ($('.submarine').position().top > 500){
+        if ($('.submarine').position().top > 240){
 
           $('.cellContainer').animate({scrollTop: '+=80px'}, 100, 'swing');
         }
@@ -481,10 +459,12 @@ $(() => {
 
       // --- UP ARROW ---
       if (e.keyCode === 38){
-        e.preventDefault();
+
+        console.log(`sub p top ${$('.submarine').position().top}`);
+
 
         // $('.cellContainer').scrollTop(100);
-        if ($('.submarine').position().top < 400){
+        if ($('.submarine').position().top < 180){
           $('.cellContainer').animate({scrollTop: '-=80px'}, 100, 'swing');
         }
 

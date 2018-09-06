@@ -80,6 +80,15 @@ h1 {
   z-index: 0;
 }
 
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+button.startButton {
+  margin: auto;
+}
+
 .restartButton {
   position: absolute;
   z-index: 10;
@@ -153,6 +162,9 @@ h2 {
 button {
   color: red;
   font-family: 'Exo 2', sans-serif;
+  font-size: 20px;
+  border-radius: 6px;
+  padding: 4px 8px;
 }
 
 
