@@ -397,6 +397,7 @@ button {
 
   background-image: url(../assets/images/004-ship-1.svg);
   background-position: center;
+  background-repeat: no-repeat;
   background-size: cover;
 
   animation: divingRight 1s infinite;
@@ -540,4 +541,15 @@ button {
 
 .seaweed6{
   background-image: url(../assets/images/hermit-crab.svg);
+}
+
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 10px;
+  position: fixed;
+  bottom: 0;
+  padding: 3px;
+
 }
