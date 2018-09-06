@@ -38,6 +38,18 @@ $(() => {
   const $ship = $('.ship');
 
 
+  //----- SOUNDS -----
+  const audioBubbling = new Audio('./assets/sounds/Bubbling-SoundBible.com-1684132696.wav');
+  const audioMotorHum = new Audio('./assets/sounds/Cargo Plane Cabin Ambiance-SoundBible.com-589803489.wav');
+  const audioDepthCharge = new Audio('./assets/sounds/DepthCharge.wav');
+  const audioFishCaught = new Audio('./assets/sounds/Fish Splashing-SoundBible.com-606142396.wav');
+  const audioFogHorn = new Audio('./assets/sounds/foghorn.wav');
+  const audioMotor = new Audio('./assets/sounds/harley.wav');
+
+  const audioSonarPing = new Audio('./assets/sounds/Sonar.wav');
+  const audioSubCreaking = new Audio('./assets/sounds/Submarine Creaking.wav');
+  const audioUnderwater = new Audio('./assets/sounds/Underwater_pool.wav');
+  const audioWarning = new Audio('./assets/sounds/warning.wav');
 
 
   // ----- FISH CONSTRUCTOR -----
@@ -111,6 +123,18 @@ $(() => {
 
     isAtTop(subLocation);
     animateSub(travelAmount);
+
+    audioMotor.currentTime = 1;
+    audioMotor.play();
+
+    audioMotor.ontimeupdate = function(){
+      if(audioMotor.currentTime > 1.5){
+        audioMotor.pause();
+      }
+    };
+
+    // // audioSonarPing.currentTime = 0;
+    // audioSonarPing.play();
   }
 
 
@@ -201,6 +225,14 @@ $(() => {
       if((fish.location === subLocation) && (fish.alive)){
 
         subCatchingFishAnimation();
+        audioFishCaught.currentTime = .6;
+        audioFishCaught.play();
+
+        audioFishCaught.ontimeupdate = function(){
+          if (audioFishCaught.currentTime > 1){
+            audioFishCaught.pause();
+          }
+        };
 
         updatePoints(fish.pointsValue);
 
@@ -240,6 +272,9 @@ $(() => {
     //Splice Mine from array of Active Mines (mineLocations)
     const indexOfExplodedMine = mineLocations.indexOf(location);
     mineLocations.splice(indexOfExplodedMine, 1);
+
+    audioDepthCharge.currentTime = 0;
+    audioDepthCharge.play();
 
   }
 
@@ -283,6 +318,10 @@ $(() => {
       removeDeadFish();
       checkIfGameHasEnd();
 
+      audioUnderwater.play();
+      audioMotorHum.play();
+      audioSonarPing.volume = .2;
+      audioSonarPing.play();
 
     }, 100);
 
@@ -322,6 +361,7 @@ $(() => {
       subLocation = subInitialLocation;
       $cells.eq(subLocation).addClass('submarine');
       gameRunning = true;
+      audioBubbling.play();
     });
 
     $modal.animate({opacity: 0}, 500);
@@ -335,6 +375,10 @@ $(() => {
 
     updateModalMessage();
     endGameAnimations();
+
+    audioSubCreaking.pause();
+    audioMotorHum.pause();
+    audioWarning.pause();
 
   }
 
@@ -361,6 +405,7 @@ $(() => {
     (subLocation < 100) &&  (scrollTime = 500);
 
     $cellContainer.animate({scrollTop: 0 }, scrollTime, 'swing', ()=>{
+      audioFogHorn.play();
       $cells.eq(subLocation).removeClass('submarine');
       $modal.animate({opacity: 1}, 500);
       $ship.animate({left: '-300px'}, 2000, ()=>{
@@ -389,8 +434,10 @@ $(() => {
       if (timeLeft < 20){
         $airSupply.css('animation','warning 0.5s infinite');
         $('.bubbles').animate({opacity: '0'}, 200);
+        audioSubCreaking.play();
+        audioWarning.play();
       }
-      
+
     }, 1000);
   }
 
@@ -422,6 +469,16 @@ $(() => {
       console.log('Q pressed');
       //Q key
       console.log('This is a test key');
+
+      audioMotor.currentTime = 0;
+      audioMotor.play();
+
+      audioMotor.ontimeupdate = function(){
+        if(audioMotor.currentTime > 1){
+          audioMotor.pause();
+        }
+      };
+
       return false;
     }
 
