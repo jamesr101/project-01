@@ -212,6 +212,17 @@ button {
   height: 100%;
   background-color: lightblue;
   transition: height 1s linear;
+  position: relative;
+}
+
+.bubbles{
+  content: '';
+  margin: 5px;
+  height: 40px;
+  width: 40px;
+  background-image: url(../assets/images/bubbles.svg);
+  background-size: cover;
+  position: absolute;
 }
 
 @keyframes warning {

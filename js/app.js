@@ -253,8 +253,10 @@ $(() => {
 
   function airSupplyWarningAnimation(){
     $airSupply.css('animation','warning 0.5s infinite');
+    $('.bubbles').animate({opacity: '0'}, 200);
     setTimeout(()=>{
       $airSupply.css('animation','');
+      $('.bubbles').animate({opacity: '1'}, 200);
     }, 1000);
   }
 
@@ -384,10 +386,11 @@ $(() => {
       timeLeft--;
       $airSupply.height(`${timeLeft/initialTime*100}%`);
 
-      (timeLeft < 20) && $airSupply.css('animation','warning 0.5s infinite');
-
-
-
+      if (timeLeft < 20){
+        $airSupply.css('animation','warning 0.5s infinite');
+        $('.bubbles').animate({opacity: '0'}, 200);
+      }
+      
     }, 1000);
   }
 
