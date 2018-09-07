@@ -11,7 +11,7 @@ let points = 0;
 let gameRunning = false;
 let gameMechanicsTimerId = 0;
 let moveFishIndex = 0;
-let spornFishIndex = 30;
+let spawnFishIndex = 30;
 let timeLeft = initialTime;
 const fishInPlay = [];
 let movingLeft = false;
@@ -176,8 +176,7 @@ $(() => {
       }
     };
 
-    // // audioSonarPing.currentTime = 0;
-    // audioSonarPing.play();
+
   }
 
 
@@ -212,7 +211,7 @@ $(() => {
   }
 
   //----- FISH FUNCTIONS -----
-  function spornFish(){
+  function spawnFish(){
 
     const greenFish = new Fish(randomLocation(), 'greenFish', 4, [1,1,width],0,20,true);
     fishInPlay.push(greenFish);
@@ -375,11 +374,11 @@ $(() => {
         moveFishIndex = 0;
       }
 
-      if (spornFishIndex<30){
-        spornFishIndex++;
+      if (spawnFishIndex<30){
+        spawnFishIndex++;
       } else {
-        spornFish();
-        spornFishIndex = 0;
+        spawnFish();
+        spawnFishIndex = 0;
       }
 
       checkIfCaught();
@@ -424,6 +423,7 @@ $(() => {
 
   function startGameAnimations(){
 
+    animateDiver();
     $ship.animate({left: '100px'}, 2000, ()=>{
       subLocation = subInitialLocation;
       $cells.eq(subLocation).addClass('submarine');
