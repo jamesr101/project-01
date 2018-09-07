@@ -30,12 +30,14 @@ h1 {
   width: 80px;
   display: inline-block;
   padding: 0 20px;
+}
+
+.logoAnimate {
+  transform: rotate(720deg);
   transition: all 1.6s cubic-bezier(0.83,-0.97, 0.24, 2.08);
 }
 
-.diverLogo:hover {
-  transform: rotate(720deg);
-}
+
 
 .container{
   z-index: 10;

@@ -37,6 +37,7 @@ $(() => {
   const $finalPoints = $('.finalPoints');
   const $ship = $('.ship');
   const $muteButton = $('.muteButton');
+  const $diverLogo = $('.diverLogo');
 
   //----- SOUNDS -----
 
@@ -83,6 +84,15 @@ $(() => {
 
     }
 
+  }
+
+  $diverLogo.on('click', animateDiver);
+
+  function animateDiver(){
+    $diverLogo.addClass('logoAnimate');
+    setTimeout(function () {
+      $diverLogo.removeClass('logoAnimate');
+    }, 2000);
   }
 
   // ----- FISH CONSTRUCTOR -----
