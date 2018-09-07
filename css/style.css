@@ -45,6 +45,17 @@ h1 {
   width: 640px;
 }
 
+.muteButton {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-image: url(../assets/images/001-speaker.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 30px;
+  width: 30px;
+}
+
 .airTankWrapper {
   position: absolute;
   left: 16px;

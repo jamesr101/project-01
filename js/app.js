@@ -16,7 +16,7 @@ let timeLeft = initialTime;
 const fishInPlay = [];
 let movingLeft = false;
 let subAtSurface = false;
-
+let soundsOn = true;
 
 function randomLocation(){
   return Math.floor(Math.random()*(numberOfCells-1));
@@ -36,41 +36,54 @@ $(() => {
   const $modalTitle = $('.modalTitle');
   const $finalPoints = $('.finalPoints');
   const $ship = $('.ship');
-
+  const $muteButton = $('.muteButton');
 
   //----- SOUNDS -----
 
-  function muteMe(elem) {
-    elem.muted = true;
-    elem.pause();
+
+  const sounds ={
+    audioBubbling: new Audio('./assets/sounds/Bubbling-SoundBible.com-1684132696.wav'),
+    audioMotorHum: new Audio('./assets/sounds/Cargo Plane Cabin Ambiance-SoundBible.com-589803489.wav'),
+    audioWarning: new Audio('./assets/sounds/warning.wav'),
+    audioSonarPing: new Audio('./assets/sounds/Sonar.wav'),
+    audioDepthCharge: new Audio('./assets/sounds/DepthCharge.wav'),
+    audioFishCaught: new Audio('./assets/sounds/Fish Splashing-SoundBible.com-606142396.wav'),
+    audioFogHorn: new Audio('./assets/sounds/foghorn.wav'),
+    audioMotor: new Audio('./assets/sounds/harley.wav'),
+    audioSubCreaking: new Audio('./assets/sounds/Submarine Creaking.wav'),
+    audioUnderwater: new Audio('./assets/sounds/Underwater_pool.wav')
+  };
+
+  sounds['audioSonarPing'].volume = .2;
+
+
+
+
+  $muteButton.on('click', ()=>{
+    soundsOn = !soundsOn;
+    muteSounds(soundsOn);
+  });
+
+  function muteSounds(soundsOn){
+    if (soundsOn){
+      $muteButton.css('background-image', 'url(./assets/images/001-speaker.svg)');
+      for (const sound in sounds){
+        sounds[sound].volume = 1;
+      }
+
+      sounds['audioSonarPing'].volume = .2;
+
+    } else {
+      $muteButton.css('background-image', 'url(./assets/images/002-mute.svg)');
+
+
+      for (const sound in sounds){
+        sounds[sound].volume = 0;
+      }
+
+    }
+
   }
-
-  mutePage();
-
-  function mutePage() {
-    const videos = document.querySelectorAll('video'),
-      audios = document.querySelectorAll('audio');
-    console.log('muted');
-    [].forEach.call(videos, function(video) {
-      muteMe(video);
-    });
-    [].forEach.call(audios, function(audio) {
-      muteMe(audio);
-
-    });
-  }
-  const audioBubbling = new Audio('./assets/sounds/Bubbling-SoundBible.com-1684132696.wav');
-  const audioMotorHum = new Audio('./assets/sounds/Cargo Plane Cabin Ambiance-SoundBible.com-589803489.wav');
-  const audioDepthCharge = new Audio('./assets/sounds/DepthCharge.wav');
-  const audioFishCaught = new Audio('./assets/sounds/Fish Splashing-SoundBible.com-606142396.wav');
-  const audioFogHorn = new Audio('./assets/sounds/foghorn.wav');
-  const audioMotor = new Audio('./assets/sounds/harley.wav');
-
-  const audioSonarPing = new Audio('./assets/sounds/Sonar.wav');
-  const audioSubCreaking = new Audio('./assets/sounds/Submarine Creaking.wav');
-  const audioUnderwater = new Audio('./assets/sounds/Underwater_pool.wav');
-  const audioWarning = new Audio('./assets/sounds/warning.wav');
-
 
   // ----- FISH CONSTRUCTOR -----
   class Fish {
@@ -137,7 +150,6 @@ $(() => {
       .removeClass('movingLeft');
     subLocation += travelAmount;
 
-    console.log(subLocation);
     $cells.eq(subLocation).addClass('submarine');
 
     movingLeft && $cells.eq(subLocation).addClass('movingLeft');
@@ -145,12 +157,12 @@ $(() => {
     isAtTop(subLocation);
     animateSub(travelAmount);
 
-    audioMotor.currentTime = 1;
-    audioMotor.play();
+    sounds['audioMotor'].currentTime = 1;
+    sounds['audioMotor'].play();
 
-    audioMotor.ontimeupdate = function(){
-      if(audioMotor.currentTime > 1.5){
-        audioMotor.pause();
+    sounds['audioMotor'].ontimeupdate = function(){
+      if(sounds['audioMotor'].currentTime > 1.5){
+        sounds['audioMotor'].pause();
       }
     };
 
@@ -236,7 +248,7 @@ $(() => {
     }
 
     if (Math.random()< 0.4){
-      const shark = new Fish(Math.floor(Math.random()*(30))+330, 'shark', 50, [-1,-1, 0, 0, -width],0,12,true);
+      const shark = new Fish(Math.floor(Math.random()*(40))+330, 'shark', 50, [-1,-1, 0, 0, -width],0,12,true);
       fishInPlay.push(shark);
     }
 
@@ -270,12 +282,12 @@ $(() => {
       if((fish.location === subLocation) && (fish.alive)){
 
         subCatchingFishAnimation();
-        audioFishCaught.currentTime = .6;
-        audioFishCaught.play();
+        sounds['audioFishCaught'].currentTime = .6;
+        sounds['audioFishCaught'].play();
 
-        audioFishCaught.ontimeupdate = function(){
-          if (audioFishCaught.currentTime > 1){
-            audioFishCaught.pause();
+        sounds['audioFishCaught'].ontimeupdate = function(){
+          if (sounds['audioFishCaught'].currentTime > 1){
+            sounds['audioFishCaught'].pause();
           }
         };
 
@@ -318,8 +330,8 @@ $(() => {
     const indexOfExplodedMine = mineLocations.indexOf(location);
     mineLocations.splice(indexOfExplodedMine, 1);
 
-    audioDepthCharge.currentTime = 0;
-    audioDepthCharge.play();
+    sounds['audioDepthCharge'].currentTime = 0;
+    sounds['audioDepthCharge'].play();
 
   }
 
@@ -342,7 +354,7 @@ $(() => {
 
 
   function gameMechanics (){
-    mutePage();
+
 
     gameMechanicsTimerId = setInterval(()=>{
 
@@ -364,10 +376,9 @@ $(() => {
       removeDeadFish();
       checkIfGameHasEnd();
 
-      audioUnderwater.play();
-      audioMotorHum.play();
-      audioSonarPing.volume = .2;
-      audioSonarPing.play();
+      sounds['audioUnderwater'].play();
+      sounds['audioMotorHum'].play();
+      sounds['audioSonarPing'].play();
 
     }, 100);
 
@@ -407,7 +418,7 @@ $(() => {
       subLocation = subInitialLocation;
       $cells.eq(subLocation).addClass('submarine');
       gameRunning = true;
-      audioBubbling.play();
+      sounds['audioBubbling'].play();
     });
 
     $modal.animate({opacity: 0}, 500);
@@ -422,9 +433,9 @@ $(() => {
     updateModalMessage();
     endGameAnimations();
 
-    audioSubCreaking.pause();
-    audioMotorHum.pause();
-    audioWarning.pause();
+    sounds['audioSubCreaking'].pause();
+    sounds['audioMotorHum'].pause();
+    sounds['audioWarning'].pause();
 
   }
 
@@ -451,7 +462,7 @@ $(() => {
     (subLocation < 100) &&  (scrollTime = 500);
 
     $cellContainer.animate({scrollTop: 0 }, scrollTime, 'swing', ()=>{
-      audioFogHorn.play();
+      sounds['audioFogHorn'].play();
       $cells.eq(subLocation).removeClass('submarine');
       $modal.animate({opacity: 1}, 500);
       $ship.animate({left: '-300px'}, 2000, ()=>{
@@ -480,8 +491,8 @@ $(() => {
       if (timeLeft < 20){
         $airSupply.css('animation','warning 0.5s infinite');
         $('.bubbles').animate({opacity: '0'}, 200);
-        audioSubCreaking.play();
-        audioWarning.play();
+        sounds['audioSubCreaking'].play();
+        sounds['audioWarning'].play();
       }
 
     }, 1000);
@@ -512,20 +523,10 @@ $(() => {
       runGame();
     }
     if (e.keyCode === 81){
-      console.log('Q pressed');
-      //Q key
-      console.log('This is a test key');
 
-      audioMotor.currentTime = 0;
-      audioMotor.play();
+      soundsOn = !soundsOn;
+      muteSounds(soundsOn);
 
-      audioMotor.ontimeupdate = function(){
-        if(audioMotor.currentTime > 1){
-          audioMotor.pause();
-        }
-      };
-
-      return false;
     }
 
 
