@@ -512,6 +512,9 @@ $(() => {
 
 
   // ----- USER CONTROLS -----
+  $(window).on('keydown', (e)=>{
+    e.preventDefault();
+  });
   $(window).on('keyup', keypressed);
   $restartButton.on('click',endGame);
   $startButton.on('click',runGame);
