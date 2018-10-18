@@ -1,11 +1,12 @@
-// ----- GAME SET UP [IMPORTANT: RESET IF BOARD SIZE CHANGES]-----
+
+// ---------- GAME SET UP [IMPORTANT: RESET IF BOARD SIZE CHANGES]----------
 const width = 8;
 const numberOfCells = 408;
 const subInitialLocation = 2;
 const initialTime = 60;
 const sizeOfCell = 80;
 
-// ----- ID AND INDEX SET UP -----
+// -------------------- TIMER ID AND INDEX SET UP --------------------
 let countDownTimerId = 0;
 let points = 0;
 let gameRunning = false;
@@ -39,7 +40,7 @@ $(() => {
   const $muteButton = $('.muteButton');
   const $diverLogo = $('.diverLogo');
 
-  //----- SOUNDS -----
+  //------------------------------ SOUNDS ------------------------------
 
 
   const sounds ={
@@ -77,7 +78,6 @@ $(() => {
     } else {
       $muteButton.css('background-image', 'url(./assets/images/002-mute.svg)');
 
-
       for (const sound in sounds){
         sounds[sound].volume = 0;
       }
@@ -85,6 +85,8 @@ $(() => {
     }
 
   }
+
+  // -------------------------- ANIMATE LOGO --------------------------
 
   $diverLogo.on('click', animateDiver);
 
@@ -95,7 +97,7 @@ $(() => {
     }, 2000);
   }
 
-  // ----- FISH CONSTRUCTOR -----
+  // ------------------------- FISH CONSTRUCTOR -------------------------
   class Fish {
     constructor(location, type, pointsValue, movementPatternArray, movementPatternIndex, age, alive){
       this.location = location;
@@ -128,7 +130,7 @@ $(() => {
         } else if (travelAmount < 0){
           $cells.eq(this.location).css({right: `${-sizeOfCell}px`});
           $cells.eq(this.location).animate({right: '0px'}, 200, 'linear');
-        }
+        } // animates the fishes movements depending on the direction of movement
 
       }
 
@@ -149,10 +151,10 @@ $(() => {
 
 
 
-  //----- SUBMARINE SET UP ------
+  //------------------------- SUBMARINE SET UP --------------------------
   let subLocation = subInitialLocation;
 
-  //----- MOVING SUBMARINE -----
+  //------------------------- MOVING SUBMARINE -------------------------
   function moveSub(travelAmount) {
 
     $cells.eq(subLocation)
@@ -167,6 +169,7 @@ $(() => {
     isAtTop(subLocation);
     animateSub(travelAmount);
 
+    // submarine audio on movement
     sounds['audioMotor'].currentTime = 1;
     sounds['audioMotor'].play();
 
@@ -194,7 +197,7 @@ $(() => {
       $cells.eq(subLocation).css({top: `${sizeOfCell}px`});
       $cells.eq(subLocation).animate({top: '0px'}, 300);
     }
-  }
+  } // animates sub depending on direction of movement
 
 
   function isAtTop(location){
@@ -202,15 +205,15 @@ $(() => {
   }
 
 
-  // ---- MINES ----
+  // ------------------------ MINES ------------------------
 
   const mineLocations = [ 57, 78, 83, 130, 142, 156, 144, 167, 226, 229, 233, 236, 239, 240, 243, 246, 313, 317, 320, 323, 327, 330, 332];
 
   function makeMines() {
     mineLocations.forEach(location => $cells.eq(location).addClass('mine'));
-  }
+  } // adds the 'mine' class to each cell where a mine is to be placed
 
-  //----- FISH FUNCTIONS -----
+  //------------------------- FISH FUNCTIONS -------------------------
   function spawnFish(){
 
     const greenFish = new Fish(randomLocation(), 'greenFish', 4, [1,1,width],0,20,true);
@@ -275,14 +278,14 @@ $(() => {
       fishInPlay.push(puffer);
     }
 
-  }
+  } // each time spawnFish() is run, fish are constructored and added to array of fishInPlay
 
 
   function moveFish(){
 
     fishInPlay.forEach(fish => fish.move());
 
-  }
+  } // moves every fish 1 position in their respective movementPatternArrays
 
 
   function checkIfCaught(){
@@ -305,7 +308,7 @@ $(() => {
         fish.alive = false;
       }
     });
-  }
+  } // checks if a fish has been caught
 
   function subCatchingFishAnimation(){
     $cells.eq(subLocation).addClass('submarineFlash');
@@ -326,9 +329,10 @@ $(() => {
         $cells.eq(fish.location).removeClass(fish.type);
       }
     });
-  }
+  } // removes all dead fish from the arrary of fish in play
 
 
+  // ----------------------- MINE FUNCTIONS -----------------------
   function mineExploded(location){
     timeLeft -= 10;
 
@@ -352,6 +356,7 @@ $(() => {
     }, 300);
   }
 
+  // --------------------- AIR SUPPLY ANIMATION ---------------------
   function airSupplyWarningAnimation(){
     $airSupply.css('animation','warning 0.5s infinite');
     $('.bubbles').animate({opacity: '0'}, 200);
@@ -361,9 +366,8 @@ $(() => {
     }, 1000);
   }
 
-
+  // ------------ GAME MECHANICS (RUNS WHILE GAME IS RUNNING) ------------
   function gameMechanics (){
-
 
     gameMechanicsTimerId = setInterval(()=>{
 
@@ -405,8 +409,7 @@ $(() => {
   }
 
 
-
-  // ----- GAME START AND END FUNCTIONS -----
+  // -------------------- GAME START AND END FUNCTIONS --------------------
   function runGame(){
 
     startGameAnimations();
@@ -419,19 +422,6 @@ $(() => {
     timeCountDown();
     gameMechanics();
 
-  }
-
-  function startGameAnimations(){
-
-    animateDiver();
-    $ship.animate({left: '100px'}, 2000, ()=>{
-      subLocation = subInitialLocation;
-      $cells.eq(subLocation).addClass('submarine');
-      gameRunning = true;
-      sounds['audioBubbling'].play();
-    });
-
-    $modal.animate({opacity: 0}, 500);
   }
 
   function endGame(){
@@ -449,22 +439,28 @@ $(() => {
 
   }
 
-  function updateModalMessage(){
-    if (subAtSurface){
-
-      $modalTitle.text('Well done!');
-      $endMessage.text('You got back to the surface safely.');
-
+  function updatePoints(score){
+    if (score === 0) {
+      points = score;
     } else {
-
-      $modalTitle.text('Oh no, you ran out of air!');
-      $endMessage.text('You need to get back to the surface before your air supply runs out.');
-
+      points += score;
     }
+    $pointDisplay.text(points);
+  }
 
-    $finalPoints.text(`You have ${points} points.`);
-    $startButton.text('Dive again (D)');
+  // ---------------------- START AND END ANIMATIONS ----------------------
 
+  function startGameAnimations(){
+
+    animateDiver();
+    $ship.animate({left: '100px'}, 2000, ()=>{
+      subLocation = subInitialLocation;
+      $cells.eq(subLocation).addClass('submarine');
+      gameRunning = true;
+      sounds['audioBubbling'].play();
+    });
+
+    $modal.animate({opacity: 0}, 500);
   }
 
   function endGameAnimations(){
@@ -482,16 +478,25 @@ $(() => {
   }
 
 
-  function updatePoints(score){
-    if (score === 0) {
-      points = score;
-    } else {
-      points += score;
-    }
-    $pointDisplay.text(points);
-  }
+  function updateModalMessage(){
+    if (subAtSurface){
 
-  // ----- GAME TIMER COUNTDOWN -----
+      $modalTitle.text('Well done!');
+      $endMessage.text('You got back to the surface safely.');
+
+    } else {
+
+      $modalTitle.text('Oh no, you ran out of air!');
+      $endMessage.text('You need to get back to the surface before your air supply runs out.');
+
+    }
+
+    $finalPoints.text(`You have ${points} points.`);
+    $startButton.text('Dive again (D)');
+
+  } // sets message for endgame model
+
+  // -------------------- GAME TIMER COUNTDOWN --------------------
   function timeCountDown(){
 
     countDownTimerId = setInterval(()=>{
@@ -503,7 +508,7 @@ $(() => {
         $('.bubbles').animate({opacity: '0'}, 200);
         sounds['audioSubCreaking'].play();
         sounds['audioWarning'].play();
-      }
+      } // warns player when there time is nearly up
 
     }, 1000);
   }
@@ -511,10 +516,11 @@ $(() => {
 
 
 
-  // ----- USER CONTROLS -----
+  // ------------------------- USER CONTROLS -------------------------
   $(window).on('keydown', (e)=>{
     e.preventDefault();
   });
+
   $(window).on('keyup', keypressed);
   $restartButton.on('click',endGame);
   $startButton.on('click',runGame);
@@ -543,11 +549,10 @@ $(() => {
     }
 
 
-
-    // ----- SUBMARINE CONTROLS -----
+    // ------------------------- SUBMARINE CONTROLS -------------------------
     if (gameRunning) {
 
-      // --- RIGHT ARROW ---
+      // ----------------------- RIGHT ARROW -----------------------
       if (e.keyCode === 39) {
 
         movingLeft = false;
@@ -560,7 +565,7 @@ $(() => {
 
       }
 
-      // --- LEFT ARROW ---
+      // ---------------------------- LEFT ARROW ----------------------------
       if (e.keyCode === 37) {
 
         movingLeft = true;
@@ -572,7 +577,7 @@ $(() => {
         }
       }
 
-      // --- DOWN ARROW ---
+      // ---------------------------- DOWN ARROW ----------------------------
       if (e.keyCode === 40){
 
 
@@ -588,7 +593,7 @@ $(() => {
 
       }
 
-      // --- UP ARROW ---
+      // ---------------------------- UP ARROW ----------------------------
       if (e.keyCode === 38){
 
 
