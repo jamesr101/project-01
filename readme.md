@@ -32,11 +32,11 @@ The player controls the movement of a submarine in order to capture the fish and
 
 ![screenshot - Start Modal](https://user-images.githubusercontent.com/40343797/45220826-6777ff00-b2a7-11e8-8511-8a5f00bc0b74.png)
 
-2. Once the game begins, there is short animation of a boat entering onto the screen and the player's submarine appears below the boat. Once the submarine appears, it can be controlled by the player.
+2. Once the game begins, there is short animation of a boat entering onto the screen and the player's submarine appears below the boat. Once the submarine appears, it can be controlled by the player using the ← ↑ → ↓ keys.
 
 ![screenshot - Beginning position](https://user-images.githubusercontent.com/40343797/45220870-8ececc00-b2a7-11e8-804a-c271278a428f.png)
 
-3. Points are gained when the submarine is moved into a fish or marine life. This 'captures' the specimen. The fishes are randomly spawned and each type of fish has their own movement patterns. Different types of fish are spawned at different levels and at different probabilities. Generally the fish with higher score values are only spawned at the lower depths and spawned less frequently.
+3. Points are gained when the submarine is moved into a fish or other marine life. This 'captures' the specimen and points are gained. The fishes are randomly spawned and each type of fish has different movement patterns. Different types of fish are spawned at different levels and at different probabilities. Generally the fish with higher score values are only spawned at the lower depths and spawned less frequently.
 
 ![screenshot - Fish types](https://user-images.githubusercontent.com/40343797/45220971-e53c0a80-b2a7-11e8-9942-714db52793d9.png)
 
@@ -56,7 +56,7 @@ I created fish as objects which contain their points value, an array of their mo
 
 While the game is running, a function runs through the array of fish in play and moves each fish the corresponding amount within their movement patterns.
 
-A function was also created which checks if a fish has been caught. This runs through the array of fish in play to check if its location is the same of that of the submarine. If it has been caught, it is removed from the array of fish in play and its corresponding points value to added to the player's score.
+A function was also created which checks if a fish has been caught. This runs through the array of fish in play to check if its location is the same as that of the submarine. If it has been caught, it is removed from the array of fish in play and its corresponding points value to added to the player's score.
 
 Once I had this mechanics working, I worked on adding a timer countdown which displayed as an air supply within the player's air tank. The height of the air supply element is a proportion of the amount of time left.
 
@@ -78,8 +78,8 @@ Creating cascading animations and sounds really helped the game come alive and g
 
 ## Future features
 
-If I had more time, I would like to try and make the game playable on mobile. I would need to make a button panel that would appear on a touch device to replace the keyboard inputs.
+If I had more time, I would like to try and make the game playable on a touchscreen device. I would need to make a controls modal that would appear on a touch device to replace the keyboard inputs.
 
 Different levels could be added to the game with different patterns of mine positioning and different fish spawning at different depths.
 
-I would also like to improve the animations of the submarine (such as adding bubbles/ending movements when moving) and improving the animations of the fish, particularly in allowing them to move diagonally.
+I would also like to improve the animations of the submarine (such as adding animated bubbles when it is moving) and improving the animations of the fish, particularly in allowing them to move diagonally.
