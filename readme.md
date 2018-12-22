@@ -1,7 +1,7 @@
 # WDI-Project1
 # General Assembly Project 1 : Simple front-end game
 
-## Goal: To create a single page game
+## Goal: To create a single page game. A 7-day sprint.
 
 ## Technologies used
 
@@ -74,7 +74,20 @@ There were several tricky tasks including the scrolling of the grid being contro
 
 ### Wins
 
-Creating cascading animations and sounds really helped the game come alive and gave me more creative control over the feel of the play. I invested a lot of time in the stying of the game, particularly the animations and air supply tank to give them a consistent and professional feel.
+Creating cascading animations and sounds really helped the game come alive and gave me more creative control over the feel of the play. I invested a lot of time in the stying of the game, particularly the animations and air supply tank to give them a consistent and professional feel. I was particularly pleased with my 'Fish' constructor function which I then used to randomly generate different fish.
+
+![Fish constructor function from app.js](https://user-images.githubusercontent.com/40343797/50378462-b7968980-062a-11e9-95b7-54e358bfb320.png)
+
+
+When fish were created, they were added to an array of 'fishInPlay'. I was then able to call this function every 200 milliseconds to move every fish on the board.
+
+```
+function moveFish(){
+
+  fishInPlay.forEach(fish => fish.move());
+
+} // moves every fish 1 position in their respective movementPatternArrays
+```
 
 ## Future features
 
