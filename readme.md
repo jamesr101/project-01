@@ -5,8 +5,8 @@
 
 ## Technologies used
 
-* HTML5 + HTML5 Audio
 * JavaScript (ES6) + jQuery
+* HTML5 + HTML5 Audio
 * CSS + CSS Animation
 * GitHub
 
@@ -91,7 +91,7 @@ function moveFish(){
 
 ## Future features
 
-If I had more time, I would like to try and make the game playable on a touchscreen device. I would need to make a controls modal that would appear on a touch device to replace the keyboard inputs.
+If I had more time, I would like to try and make the game playable on a touchscreen device. I would need to make a control panel that would appear on a touch device to replace the keyboard inputs.
 
 Different levels could be added to the game with different patterns of mine positioning and different fish spawning at different depths.
 
