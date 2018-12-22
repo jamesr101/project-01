@@ -1,7 +1,9 @@
 # WDI-Project1
 # General Assembly Project 1 : Simple front-end game
 
-## Goal: To create a single page game. A 7-day sprint.
+## Goal: To create a single page game
+### Timeframe
+7 days
 
 ## Technologies used
 
@@ -14,6 +16,7 @@
 
 ![Deep Sea Dive](https://user-images.githubusercontent.com/40343797/45214662-fc243200-b292-11e8-9c52-5a1053aa8c0a.png)
 
+You can find a hosted version here ----> [jamesr101.github.io/project-01](https://jamesr101.github.io/project-01)
 
 ### Game overview
 Deep Sea Dive is a one person game inspired by the French conservationist and filmmaker Jacques Cousteau. The aim is to capture as many specimen of sea life and return to the surface before the air supply runs out.
