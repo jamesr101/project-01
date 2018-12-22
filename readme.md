@@ -6,8 +6,8 @@
 ## Technologies used
 
 * HTML5 + HTML5 Audio
+* JavaScript (ES6) + jQuery
 * CSS + CSS Animation
-* Javascript (ES6) + jQuery
 * GitHub
 
 ## My Game - Deep Sea Dive
@@ -50,7 +50,7 @@ The player controls the movement of a submarine in order to capture the fish and
 
 ## Process
 
-The starting point for this game was creating the basic grid layout on which the submarine could move. This was created by a list of 'div's in the html, each cell within the grid being a individual element. These cells are nestled within a container. The submarine, and fish were created by applying classes to the elements within the grid. When the submarine or fish is moved, their class is removed from the cell of their current position and applied to the new cell.
+The starting point for this game was creating the basic grid layout on which the submarine could move. This was created by a list of 'div's in the HTML. Each cell within the grid was an individual element. These cells are nestled within a container. The submarine, and fish were created by applying classes to the elements within the grid. When the submarine or fish is moved, their class is removed from the cell of their current position and applied to the new cell.
 
 I created fish as objects which contain their points value, an array of their movement patterns, their age and the class which is being applied to the cell that they are in. The class relates to a css class with a corresponding background image of the fish type. When a fish is created it is added to an array of fish in play.
 
@@ -64,7 +64,7 @@ I then moved onto the task of allowing the position of the submarine to control 
 
 As the game continued to develop I created a fish constructor function which created the fish objects and also contained the method which allowed the fish to move. I had initially also created a method which allowed the fish, when they were caught or swam off screen, to be removed from the fish in played array and remove their classes from the grid. However, I later changed this to a key within the fish object which specified whether the fish was active or not. During the game, a function now runs through the array of fish in play and removes any fish which have been set to no longer active.
 
-The final significant element was creating an variable which specified whether the submarine was at the top of the surface or not when the air supply had reached zero. I created a modal with content which varied depending on whether the player had returned to the surface by the end of the game.
+The final significant element was creating a variable which specified whether the submarine was at the top of the surface when the air supply had reached zero. I created a modal with content which varied depending on whether the player had returned to the surface by the end of the game.
 
 ### Challenges
 
